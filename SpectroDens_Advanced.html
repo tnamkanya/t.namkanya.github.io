@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECHKON SpectroDens — คู่มือฝึกอบรมการใช้งาน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary: #00875A;
+        --primary-dark: #006644;
+        --primary-light: #E3FCEF;
+        --blue: #0052CC;
+        --cyan: #00A8E8;
+        --magenta: #E6007E;
+        --yellow: #F9D423;
+        --black: #172B4D;
+        --bg-body: #F4F5F7;
+        --bg-card: #FFFFFF;
+        --text-main: #091E42;
+        --text-muted: #5E6C84;
+        --border: #DFE1E6;
+        --device-aluminum: linear-gradient(135deg, #e6e8eb 0%, #cbd1d8 50%, #b8c0ca 100%);
+        --device-bezel: #25282c;
+        --screen-bg: #05070a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+    body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.65; display: flex; flex-direction: column; min-height: 100vh; }
+
+    header {
+        background: #091E42; color: white; padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center;
+        flex-wrap: wrap; gap: 1rem;
+    }
+    .header-title { display: flex; align-items: center; gap: 12px; }
+    .brand-badge { background: #00875A; color: white; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
+    .header-title h1 { font-size: 1.2rem; font-weight: 600; color: #FFFFFF; }
+    .header-title span { font-size: 0.82rem; color: #97A0AF; }
+
+    .header-author-badge {
+        background: rgba(0, 135, 90, 0.25); border: 1px solid #36B37E; color: #E3FCEF;
+        padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+        display: flex; align-items: center; gap: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .header-author-badge strong { color: #FFFFFF; font-weight: 600; }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .search-box { position: relative; width: 220px; }
+    .search-box input {
+        width: 100%; padding: 8px 12px 8px 14px; border-radius: 20px; border: 1px solid #344563;
+        background: #172B4D; color: white; font-size: 0.88rem; outline: none; transition: all 0.2s;
+    }
+    .search-box input::placeholder{ color:#7A869A; }
+    .search-box input:focus { border-color: #00875A; background: #091E42; box-shadow: 0 0 0 2px rgba(0, 135, 90, 0.3); }
+
+    .btn-mode {
+        padding: 8px 14px; border-radius: 6px; border: 1px solid #344563; background: #172B4D; color: #E3FCEF;
+        cursor: pointer; font-size: 0.84rem; font-weight: 500; transition: 0.2s;
+    }
+    .btn-mode:hover { background: #00875A; color: white; border-color: #00875A; }
+
+    .app-container { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; }
+
+    .sidebar {
+        width: 320px; background: #FFFFFF; border-right: 1px solid var(--border); padding: 1.5rem 1rem;
+        height: calc(100vh - 68px); overflow-y: auto; position: sticky; top: 68px; flex-shrink: 0;
+    }
+    .nav-category { margin-bottom: 1.5rem; }
+    .nav-category-title {
+        font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;
+        color: var(--text-muted); margin-bottom: 0.6rem; padding-left: 8px;
+    }
+    .nav-list { list-style: none; }
+    .nav-item {
+        padding: 10px 12px; border-radius: 6px; margin-bottom: 4px; cursor: pointer; display: flex;
+        align-items: center; justify-content: space-between; font-size: 0.87rem; color: #172B4D;
+        font-weight: 400; transition: all 0.2s; gap:8px;
+    }
+    .nav-item:hover { background: #EBECF0; color: #0052CC; }
+    .nav-item.active { background: var(--primary-light); color: var(--primary-dark); font-weight: 600; border-left: 4px solid var(--primary); }
+    .tag-badge { font-size: 0.68rem; padding: 2px 7px; border-radius: 10px; background: #DFE1E6; color: #42526E; font-weight: 600; flex-shrink:0; white-space:nowrap; }
+    .tag-highlight { background: #DEEBFF; color: #0747A6; }
+
+    .main-content { flex: 1; padding: 2rem; overflow-y: auto; }
+    .content-header { margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .content-header h2 { font-size: 1.45rem; color: #091E42; }
+    .subtitle { color: var(--text-muted); font-size: 0.93rem; margin-top: 4px; }
+
+    .interactive-grid { display: grid; grid-template-columns: 480px 1fr; gap: 2rem; align-items: start; }
+    @media (max-width: 1200px) { .interactive-grid { grid-template-columns: 1fr; } .sidebar { width: 280px; } }
+    @media (max-width: 850px) { .app-container { flex-direction: column; } .sidebar { width: 100%; height: auto; position: static; } }
+
+    .device-wrapper { position: sticky; top: 90px; }
+    .spectrodens-device {
+        background: var(--device-aluminum); border-radius: 18px; padding: 20px;
+        box-shadow: 0 15px 35px rgba(9, 30, 66, 0.25), 0 3px 10px rgba(0,0,0,0.1), inset 0 2px 2px rgba(255,255,255,0.8);
+        border: 1px solid #a6b0bc; position: relative; width: 100%; max-width: 480px; margin: 0 auto;
+    }
+    .device-green-button {
+        background: linear-gradient(180deg, #36B37E 0%, #00875A 100%); height: 16px; width: 150px;
+        border-radius: 8px 8px 0 0; position: absolute; top: -12px; left: 50%; transform:translateX(-50%);
+        cursor: pointer; box-shadow: 0 -2px 6px rgba(0, 135, 90, 0.4); transition: transform 0.1s, filter 0.1s;
+        border: 1px solid #006644; display: flex; align-items: center; justify-content: center;
+        font-size: 0.64rem; color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .device-green-button:hover { filter: brightness(1.1); }
+    .device-green-button:active { transform: translateX(-50%) translateY(2px); }
+
+    .device-body { display: flex; gap: 16px; }
+    .screen-bezel { background: var(--device-bezel); padding: 10px; border-radius: 12px; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); width: 310px; flex-shrink: 0; }
+    .lcd-display {
+        background: var(--screen-bg); border-radius: 6px; height: 230px; color: #FFFFFF; display: flex;
+        flex-direction: column; justify-content: space-between; padding: 8px; font-family: 'JetBrains Mono', monospace;
+        position: relative; overflow: hidden; border: 1px solid #1a202c; box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+    }
+    .lcd-top-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.74rem; border-bottom: 1px solid #222; padding-bottom: 4px; }
+    .lcd-tab-group { display: flex; gap: 6px; }
+    .lcd-tab { padding: 2px 8px; border-radius: 3px; background: #111; color: #777; font-size: 0.68rem; }
+    .lcd-tab.active { background: #2b3544; color: #FFF; font-weight: bold; }
+    .lcd-battery { display: flex; align-items: center; gap: 4px; color: #36B37E; font-size: 0.68rem; }
+
+    .lcd-main-screen { flex: 1; padding: 8px 4px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .screen-title { font-size: 0.78rem; color: #888; margin-bottom: 4px; text-align: center; letter-spacing:0.5px; }
+    .big-measurement-val { font-size: 1.6rem; font-weight: 700; text-align: center; letter-spacing: 1px; }
+
+    .cmyk-boxes { display: flex; justify-content: space-around; margin-top: 10px; }
+    .cmyk-box { display: flex; flex-direction: column; align-items: center; font-size: 0.68rem; gap:3px; }
+    .color-badge { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 3px; color: #fff; font-size:0.72rem; }
+    .badge-c { background: #00a8e8; } .badge-m { background: #e6007e; } .badge-y { background: #f9d423; color: #000; } .badge-k { background: #111; border: 1px solid #555; }
+
+    .lcd-right-softkeys { position: absolute; right: 6px; top: 30px; display: flex; flex-direction: column; gap: 8px; font-size: 0.64rem; color: #666; text-align: right; }
+    .softkey-icon { padding: 2px 4px; border-radius: 3px; border: 1px solid transparent; }
+    .softkey-icon.active { border-color: #00875A; color: #E3FCEF; background: rgba(0,135,90,0.2); }
+
+    .lcd-bottom-bar { display: flex; justify-content: space-between; font-size: 0.66rem; border-top: 1px solid #222; padding-top: 4px; color: #888; }
+    .lcd-func-name { background: #1c222d; padding: 2px 6px; border-radius: 3px; color: #4c9aff; font-weight: 600; }
+    .lcd-condition { background: #1c222d; padding: 2px 6px; border-radius: 3px; color: #FFAB00; }
+
+    .device-keypad { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; }
+    .keypad-cluster {
+        display: grid; grid-template-columns: repeat(2, 44px); grid-template-rows: repeat(2, 44px); gap: 8px;
+        background: #172B4D; padding: 10px; border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 3px rgba(255,255,255,0.1);
+    }
+    .d-btn {
+        border-radius: 50%; border: none; background: #253858; color: #FAFBFC; display: flex; align-items: center;
+        justify-content: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.4); font-size: 0.9rem; transition: all 0.1s;
+    }
+    .d-btn:hover { background: #344563; }
+    .d-btn:active { transform: scale(0.92); box-shadow: inset 0 2px 4px rgba(0,0,0,0.6); }
+    .d-btn-escape { background: #DE350B; color: white; }
+    .d-btn-escape:hover { background: #FF5630; }
+
+    .device-branding { text-align: center; margin-top: 14px; font-size: 0.74rem; font-weight: 700; color: #5E6C84; letter-spacing: 1px; }
+
+    .sim-action-bar { margin-top: 12px; display: flex; gap: 8px; }
+    .btn-action-sim {
+        flex: 1; padding: 9px 10px; border-radius: 6px; border: 1px solid var(--border); background: #FFFFFF;
+        font-size: 0.84rem; font-weight: 600; cursor: pointer; display: flex; align-items: center;
+        justify-content: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: all 0.2s;
+    }
+    .btn-action-sim:hover { background: #F4F5F7; border-color: #C1C7D0; }
+    .btn-action-primary { background: #00875A; color: white; border-color: #00875A; }
+    .btn-action-primary:hover { background: #006644; color: white; }
+
+    .doc-section { display: flex; flex-direction: column; gap: 1.2rem; }
+    .card { background: #FFFFFF; border-radius: 10px; padding: 1.25rem 1.5rem; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; border-bottom: 1px solid #EBECF0; padding-bottom: 0.5rem; }
+    .card-header h3 { font-size: 1.05rem; color: #091E42; font-weight:600; }
+
+    .guide-box { background: #F4F5F7; border-left: 4px solid #0052CC; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-top: 0.5rem; }
+    .guide-box h4 { color: #0747A6; font-size: 0.88rem; margin-bottom: 4px; font-weight:600; }
+    .guide-box p { color: #172B4D; font-size: 0.87rem; line-height: 1.6; }
+
+    .step-list { list-style: none; counter-reset: step-counter; }
+    .step-item { position: relative; padding-left: 36px; margin-bottom: 0.85rem; }
+    .step-item::before {
+        counter-increment: step-counter; content: counter(step-counter); position: absolute; left: 0; top: 2px;
+        width: 24px; height: 24px; background: #00875A; color: #FFFFFF; font-weight: 700; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; font-size: 0.76rem;
+    }
+    .step-title { font-weight: 600; color: #172B4D; font-size: 0.91rem; }
+    .step-desc { color: #5E6C84; font-size: 0.87rem; margin-top:2px; }
+
+    .tip-box { background: #EAE6FF; border-left: 4px solid #6554C0; padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 0.87rem; color: #403294; margin-top: 0.75rem; }
+    .tip-box strong{ display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px; }
+    .warning-box { background: #FFEBE6; border-left: 4px solid #FF5630; padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 0.87rem; color: #BF2600; margin-top: 0.75rem; }
+    .warning-box strong{ display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px; }
+
+    .highlight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.85rem; margin-top: 0.75rem; }
+    .highlight-item { background: #FAFBFC; padding: 12px; border-radius: 6px; border: 1px solid var(--border); border-left: 4px solid #0052CC; }
+    .highlight-item h4 { font-size: 0.88rem; color: #091E42; margin-bottom: 4px; font-weight:600; }
+    .highlight-item p { font-size: 0.82rem; color: #42526E; line-height: 1.5; }
+
+    .tech-table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 0.84rem; }
+    .tech-table th, .tech-table td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+    .tech-table th { background: #F4F5F7; color: #172B4D; font-weight: 600; }
+    .tech-table tr:nth-child(even) { background: #FAFBFC; }
+
+    .quiz-option {
+        background: #FAFBFC; border: 1px solid var(--border); padding: 10px 14px; border-radius: 6px; margin-bottom: 6px;
+        cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 10px; font-size: 0.89rem;
+    }
+    .quiz-option:hover { background: #EBECF0; border-color: #B3D4FF; }
+    .quiz-option.correct { background: #E3FCEF; border-color: #36B37E; color: #006644; font-weight: 600; }
+    .quiz-option.wrong { background: #FFEBE6; border-color: #FF5630; color: #BF2600; }
+
+    .shortcut-badge { background: #EBECF0; border: 1px solid #C1C7D0; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: bold; color: #172B4D; }
+
+    .credit-footer-container {
+        background: #FFFFFF; border-top: 2px solid var(--primary); padding: 22px 24px;
+        text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+    }
+    .credit-title { font-size: 0.95rem; font-weight: 700; color: #091E42; letter-spacing: 0.5px; }
+    .credit-subtitle { font-size: 0.86rem; color: #5E6C84; }
+
+    /* Custom Illustrations & SVG wrappers */
+    .figure-container {
+        background: #F8F9FA; border: 1px solid #E2E8F0; border-radius: 8px;
+        padding: 14px; margin: 12px 0; text-align: center;
+    }
+    .figure-caption { font-size: 0.78rem; color: #64748B; margin-top: 8px; font-weight: 500; }
+
+    .color-wheel-block { display:flex; align-items:center; justify-content:center; gap:16px; margin-top:6px; }
+    .color-wheel-outer { position:relative; width:110px; height:110px; flex-shrink:0; }
+    .color-wheel {
+        width:110px; height:110px; border-radius:50%;
+        background: conic-gradient(from 90deg, #ff3b3b, #ffe83b, #3bff5e, #3bffe8, #3b6bff, #c73bff, #ff3b8f, #ff3b3b);
+        box-shadow: 0 0 0 2px #333, inset 0 0 12px rgba(0,0,0,0.4);
+    }
+    .color-wheel-outer::before, .color-wheel-outer::after { content:''; position:absolute; background:rgba(255,255,255,0.6); }
+    .color-wheel-outer::before { left:0; right:0; top:50%; height:1px; }
+    .color-wheel-outer::after { top:0; bottom:0; left:50%; width:1px; }
+    .color-wheel-marker { position:absolute; width:10px; height:10px; border-radius:50%; background:#fff; border:2px solid #091E42; box-shadow:0 0 5px rgba(0,0,0,0.8); transform:translate(-50%,-50%); }
+    .color-wheel-axis-label { position:absolute; font-family:'JetBrains Mono', monospace; font-size:0.6rem; color:#888; font-weight: bold; }
+    .cwl-top { top:-16px; left:50%; transform:translateX(-50%); color:#F9D423; }
+    .cwl-bottom { bottom:-16px; left:50%; transform:translateX(-50%); color:#0052CC; }
+    .cwl-left { left:-26px; top:50%; transform:translateY(-50%); color:#00875A; }
+    .cwl-right { right:-26px; top:50%; transform:translateY(-50%); color:#DE350B; }
+    .color-wheel-readout { font-family:'JetBrains Mono', monospace; font-size:0.68rem; color:#ddd; line-height:1.6; text-align:left; }
+    .color-wheel-readout b { color:#fff; }
+
+    @media print {
+        header, .sidebar, .device-keypad, .sim-action-bar { display: none !important; }
+        .interactive-grid { grid-template-columns: 1fr; }
+        body { background: white; }
+        .card { border: 1px solid #ccc; page-break-inside: avoid; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header-title">
+        <span class="brand-badge">TECHKON</span>
+        <div>
+            <h1>SpectroDens</h1>
+            <span>คู่มือฝึกอบรมการใช้งานสำหรับลูกค้า</span>
+        </div>
+    </div>
+    <div class="header-author-badge">
+        <span>จัดทำโดย:</span> <strong>นายธนาพล นามกันยา · บริษัท เนชั่นไวด์ จำกัด</strong>
+    </div>
+    <div class="header-actions">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ค้นหาฟังก์ชัน..." onkeyup="filterMenu()">
+        </div>
+        <button class="btn-mode" onclick="toggleQuizMode()">แบบทดสอบความเข้าใจ</button>
+        <button class="btn-mode" onclick="window.print()">พิมพ์เอกสาร</button>
+    </div>
+</header>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="nav-category">
+            <div class="nav-category-title">หลักการเบื้องต้นและการเตรียมเครื่อง</div>
+            <ul class="nav-list">
+                <li class="nav-item active" onclick="loadContent('basics_intro')"><span>หลักการวัดค่าสีเบื้องต้น</span><span class="tag-badge tag-highlight">ทฤษฎี</span></li>
+                <li class="nav-item" onclick="loadContent('overview')"><span>ปุ่มควบคุมและการใช้งานเบื้องต้น</span><span class="tag-badge">ฮาร์ดแวร์</span></li>
+                <li class="nav-item" onclick="loadContent('calibration')"><span>การคาลิเบรทเครื่อง</span><span class="tag-badge" style="background:#FFEBE6;color:#DE350B;">สำคัญ</span></li>
+                <li class="nav-item" onclick="loadContent('m_conditions')"><span>เงื่อนไขการวัด M0 / M1 / M2 / M3</span><span class="tag-badge tag-highlight">ISO 13655</span></li>
+            </ul>
+        </div>
+
+        <div class="nav-category">
+            <div class="nav-category-title">ฟังก์ชันกลุ่มความหนาแน่นหมึก</div>
+            <ul class="nav-list">
+                <li class="nav-item" onclick="loadContent('auto_density')"><span>Automatic Density</span><span class="tag-badge">พื้นฐาน</span></li>
+                <li class="nav-item" onclick="loadContent('densities_cmyk')"><span>Densities CMYK</span><span class="tag-badge">4 สีพร้อมกัน</span></li>
+                <li class="nav-item" onclick="loadContent('dot_area')"><span>Dot Area</span><span class="tag-badge">เม็ดสกรีน</span></li>
+                <li class="nav-item" onclick="loadContent('dot_gain')"><span>Dot Gain / Print Contrast</span><span class="tag-badge">เม็ดสกรีน</span></li>
+                <li class="nav-item" onclick="loadContent('trapping')"><span>Trapping (การพิมพ์ทับสี)</span><span class="tag-badge">Preucil</span></li>
+                <li class="nav-item" onclick="loadContent('printing_curve')"><span>Printing Curve</span></li>
+                <li class="nav-item" onclick="loadContent('printing_plate')"><span>Printing Plate</span></li>
+                <li class="nav-item" onclick="loadContent('slur_doubling')"><span>Slur &amp; Doubling</span></li>
+                <li class="nav-item" onclick="loadContent('density_graph')"><span>กราฟความหนาแน่นสีพิเศษ</span></li>
+                <li class="nav-item" onclick="loadContent('expresso_mini')"><span>ExPresso Mini</span></li>
+            </ul>
+        </div>
+
+        <div class="nav-category">
+            <div class="nav-category-title">ฟังก์ชันกลุ่มค่าสีเชิงมาตรฐาน</div>
+            <ul class="nav-list">
+                <li class="nav-item" onclick="loadContent('cielab_d')"><span>CIE L*a*b* + D</span><span class="tag-badge tag-highlight">Color + Density</span></li>
+                <li class="nav-item" onclick="loadContent('cielab')"><span>CIE L*a*b*</span><span class="tag-badge tag-highlight">Colorimetry</span></li>
+                <li class="nav-item" onclick="loadContent('color_circle')"><span>CIE Color Circle</span></li>
+                <li class="nav-item" onclick="loadContent('g7')"><span>G7™ Calibration</span></li>
+                <li class="nav-item" onclick="loadContent('remission_curve')"><span>Remission Curve</span></li>
+                <li class="nav-item" onclick="loadContent('ink_check')"><span>InkCheck</span><span class="tag-badge" style="background:#E3FCEF;color:#006644;">คุมหมึก</span></li>
+                <li class="nav-item" onclick="loadContent('cie_xyz')"><span>CIE XYZ</span></li>
+                <li class="nav-item" onclick="loadContent('cie_lch')"><span>CIE L*C*h° ab</span></li>
+            </ul>
+        </div>
+
+        <div class="nav-category">
+            <div class="nav-category-title">ระบบจัดการข้อมูลและซอฟต์แวร์</div>
+            <ul class="nav-list">
+                <li class="nav-item" onclick="loadContent('color_library')"><span>คลังสี (Color Library)</span></li>
+                <li class="nav-item" onclick="loadContent('spectrodens_connect')"><span>โปรแกรม SpectroDens Connect</span><span class="tag-badge">ซอฟต์แวร์ PC</span></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="content-header">
+            <h2 id="mainTitle">หลักการวัดค่าสีเบื้องต้น</h2>
+            <div class="subtitle" id="mainSubtitle">สรุปหลักการทำงานของเครื่องและพารามิเตอร์หลักที่ใช้ในการควบคุมคุณภาพงานพิมพ์</div>
+        </div>
+
+        <div class="interactive-grid">
+            <div class="device-wrapper">
+                <div class="spectrodens-device">
+                    <div class="device-green-button" onclick="triggerMeasurement()" title="จำลองการกดปุ่มวัดค่า">วัดค่า</div>
+                    <div class="device-body">
+                        <div class="screen-bezel">
+                            <div class="lcd-display" id="lcdScreen">
+                                <div class="lcd-top-bar">
+                                    <div class="lcd-tab-group">
+                                        <span class="lcd-tab" id="tabRef">Reference</span>
+                                        <span class="lcd-tab active" id="tabSample">Sample</span>
+                                    </div>
+                                    <div class="lcd-battery">แบตเตอรี่ 100%</div>
+                                </div>
+                                <div class="lcd-main-screen" id="lcdMainContent">
+                                    <div class="screen-title">SPECTRAL SENSOR</div>
+                                    <div class="big-measurement-val" style="color:#36B37E;">400–700 nm</div>
+                                </div>
+                                <div class="lcd-right-softkeys">
+                                    <span class="softkey-icon active" id="skCal">CAL</span>
+                                    <span class="softkey-icon" id="skDelta">Δ</span>
+                                    <span class="softkey-icon" id="skAvg">Ø</span>
+                                    <span class="softkey-icon" id="skBook">LIB</span>
+                                </div>
+                                <div class="lcd-bottom-bar">
+                                    <span class="lcd-func-name" id="lcdFuncName">Optical Sensor</span>
+                                    <span class="lcd-condition" id="lcdCondition">0/45° · DIN 5033</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="device-keypad">
+                            <div class="keypad-cluster">
+                                <button class="d-btn" onclick="simNav('up')" title="เลื่อนขึ้น">▲</button>
+                                <button class="d-btn d-btn-escape" onclick="simNav('escape')" title="ปุ่ม Escape / ย้อนกลับ">●</button>
+                                <button class="d-btn" onclick="simNav('down')" title="เลื่อนลง">▼</button>
+                                <button class="d-btn" onclick="simNav('enter')" title="ปุ่ม Enter / ยืนยัน">↵</button>
+                            </div>
+                            <div class="device-branding">TECHKON<br><span style="font-size:0.6rem;color:#7A869A;">SpectroDens</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sim-action-bar">
+                    <button class="btn-action-sim btn-action-primary" onclick="triggerMeasurement()">จำลองการวัดจุดเดี่ยว</button>
+                    <button class="btn-action-sim" onclick="triggerScan()">จำลองการวัดต่อเนื่อง</button>
+                </div>
+
+                <div class="tip-box" style="margin-top: 1rem;">
+                    <strong>คำแนะนำการใช้เมนู</strong>
+                    ใช้ปุ่มลูกศร <span class="shortcut-badge">▲ / ▼</span> บนแป้นกดเพื่อเลื่อนดูฟังก์ชันถัดไปหรือก่อนหน้าได้โดยไม่ต้องกลับไปที่เมนูด้านซ้าย และกดปุ่ม <span class="shortcut-badge">Escape (แดง)</span> เพื่อกลับสู่หน้าหลักได้ทันที
+                </div>
+            </div>
+
+            <div class="doc-section" id="docContainer"></div>
+        </div>
+    </main>
+</div>
+
+<footer class="credit-footer-container">
+    <div class="credit-title">คู่มือฝึกอบรมและสื่อการเรียนรู้ TECHKON SpectroDens</div>
+    <div class="credit-subtitle">สร้างและพัฒนาเนื้อหาโดย <strong>นายธนาพล นามกันยา</strong> &nbsp;·&nbsp; <strong>บริษัท เนชั่นไวด์ จำกัด</strong></div>
+</footer>
+
+<script>
+    const manualData = {
+        basics_intro: {
+            title: "หลักการวัดค่าสีเบื้องต้น",
+            subtitle: "สรุปหลักการทำงานของเครื่องและพารามิเตอร์หลักที่ใช้ในการควบคุมคุณภาพงานพิมพ์",
+            lcd: { title:"SPECTRAL SENSOR", big:"400–700 nm", color:"#36B37E", func:"Optical Sensor", cond:"0/45° · DIN 5033",
+                extra: "<div style='font-size:0.72rem;color:#aaa;text-align:center;margin-top:8px;'>ความละเอียดสเปกตรัม: ทุก 10 nm<br>แหล่งกำเนิดแสง: หลอดก๊าซ ชนิด A</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>หลักการทำงานของเครื่อง</h3></div>
+                    <p style="font-size:0.9rem;color:#42526E;line-height:1.7;">
+                    เครื่อง TECHKON SpectroDens รวมคุณสมบัติของเครื่องสเปกโตรโฟโตมิเตอร์ความแม่นยำสูงและเดนซิโตมิเตอร์ไว้ในเครื่องเดียว ทำงานโดยการบันทึกค่าการสะท้อนแสงตลอดช่วงสเปกตรัม 400–700 นาโนเมตร แล้วนำข้อมูลสเปกตรัมมาคำนวณแสดงผลเป็น 2 กลุ่มหลัก:
+                    </p>
+                    <div class="highlight-grid">
+                        <div class="highlight-item" style="border-left-color:#00A8E8;">
+                            <h4>1. ข้อมูลความหนาแน่นหมึก (Densitometric Data)</h4>
+                            <p>ใช้ควบคุมปริมาณหมึกพิมพ์ระหว่างพิมพ์ เช่น Solid Density, Dot Gain, Dot Area, Gray Balance และ Trapping</p>
+                        </div>
+                        <div class="highlight-item" style="border-left-color:#6554C0;">
+                            <h4>2. ข้อมูลค่าสีเชิงมาตรฐาน (Colorimetric Data)</h4>
+                            <p>ใช้วัดค่าพิกัดสีสัมบูรณ์และประเมินพรูฟ/งานพิมพ์เทียบกับเป้าหมายสากล เช่น CIE L*a*b*, CIE L*C*h* และค่าความคลาดเคลื่อนสี ΔE*</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="guide-box">
+                    <h4>ข้อควรทราบก่อนเริ่มใช้งาน</h4>
+                    <p>ผู้ใช้งานควรทำการคาลิเบรทเครื่องก่อนเริ่มชุดการวัดเสมอ โดยเลือกคาลิเบรทกระดาษขาว (Paper White) สำหรับงานวัดความหนาแน่นหมึก หรือคาลิเบรทแผ่นขาวสัมบูรณ์ (Absolute White) บนฐานชาร์จสำหรับงานวัดค่าสีเชิงมาตรฐาน</p>
+                </div>
+            `
+        },
+
+        overview: {
+            title: "ปุ่มควบคุมและการใช้งานเบื้องต้น",
+            subtitle: "หน้าที่ของปุ่มควบคุมหลักบนตัวเครื่องและวิธีการวัดค่าเบื้องต้น",
+            lcd: { title:"HARDWARE", big:"READY", color:"#36B37E", func:"Device Standby", cond:"Battery OK",
+                extra:"<div style='font-size:0.7rem;color:#888;text-align:center;margin-top:8px;'>ช่องรับแสงมาตรฐาน: 3.0 mm</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>หน้าที่ของปุ่มควบคุมหลัก</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">ปุ่มวัดค่าสีเขียว (Green Measurement Button)</div><div class="step-desc">กดสั้น 1 ครั้งเพื่อเปิดเครื่อง หรือกดเพื่อวัดค่า ณ จุดเดียว (Spot Measurement) หากกดค้างขณะเลื่อนจะทำงานในโหมด Scan Measurement</div></li>
+                        <li class="step-item"><div class="step-title">ปุ่มลูกศรขึ้น–ลง (Arrow Buttons)</div><div class="step-desc">ใช้เลื่อนเคอร์เซอร์ระหว่าง Soft Keys รอบกรอบหน้าจอและเลื่อนดูเมนูต่าง ๆ</div></li>
+                        <li class="step-item"><div class="step-title">ปุ่ม Enter (Enter Button)</div><div class="step-desc">ใช้ยืนยันการเลือกเมนู หรือกดค้าง 3 วินาทีเพื่อบันทึก/ล็อกค่าความหนาแน่นจุดทึบไว้ใช้ซ้ำ</div></li>
+                        <li class="step-item"><div class="step-title">ปุ่ม Escape สีแดง (Escape Button)</div><div class="step-desc">ใช้ย้อนกลับเมนูเดิม หรือกดเพื่อยกเลิก/ลบค่าที่วัดผิดพลาดเพื่อวัดซ้ำในจุดเดิม</div></li>
+                    </ul>
+                </div>
+                <div class="tip-box">
+                    <strong>การสลับฟังก์ชันด่วน (Fast Toggle)</strong>
+                    กดปุ่ม Escape (สีแดง) ค้างไว้ แล้วกดปุ่มลูกศร <span class="shortcut-badge">▲</span> หรือ <span class="shortcut-badge">▼</span> เครื่องจะสลับไปมาระหว่างฟังก์ชัน Densitometric ล่าสุดกับฟังก์ชัน Colorimetric ล่าสุดได้ทันที
+                </div>
+            `
+        },
+
+        calibration: {
+            title: "การคาลิเบรทเครื่อง",
+            subtitle: "ขั้นตอนการสอบเทียบเครื่องก่อนเริ่มใช้งานในแต่ละชุดงาน",
+            lcd: { title:"CALIBRATION", big:"CAL OK", color:"#36B37E", func:"Optical Baseline", cond:"White Ref.",
+                extra:"<div style='font-size:0.72rem;color:#aaa;text-align:center;margin-top:8px;'>Paper White: D = 0.00<br>Absolute White: Verified</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการคาลิเบรท 2 รูปแบบ</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item">
+                            <div class="step-title">การคาลิเบรทบนกระดาษขาว (Paper White Calibration - สำหรับ Densitometry)</div>
+                            <div class="step-desc">เลื่อน Soft Key ไปที่ไอคอนรูปกระดาษซ้อน วางหัววัดบนกระดาษเปล่าของงานพิมพ์จริง แล้วกดปุ่มวัดค่าสีเขียว เพื่อตั้งจุดศูนย์ความหนาแน่น D = 0.00 ให้สอดคล้องกับเนื้อกระดาษจริง</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">การคาลิเบรทบนแผ่นขาวสัมบูรณ์ (Absolute White Calibration - สำหรับ Colorimetry)</div>
+                            <div class="step-desc">วางตัวเครื่องลงบนแท่นชาร์จ (Charging Console) ให้ตรงกับแผ่นกระเบื้องเซรามิกขาว เลื่อนเคอร์เซอร์ไปที่ไอคอน <strong>CAL</strong> แล้วกดปุ่มวัดค่าสีเขียว เพื่อตั้งค่าอ้างอิงแสงสะท้อนสัมบูรณ์ตามมาตรฐาน NIST</div>
+                        </li>
+                    </ul>
+                </div>
+            `
+        },
+
+        m_conditions: {
+            title: "เงื่อนไขการวัด M0 / M1 / M2 / M3",
+            subtitle: "เงื่อนไขการวัดค่าสีตามมาตรฐาน ISO 13655 สำหรับการควบคุมคุณภาพงานพิมพ์",
+            lcd: { title:"MEASUREMENT CONDITION", big:"M1", color:"#00A8E8", func:"Measurement Condition", cond:"D50 2°/noPOL/ABS",
+                extra:"<div style='font-size:0.7rem;color:#aaa;text-align:center;margin-top:10px;'>M0 · M1 · M2 · M3</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ทำไมต้องมีเงื่อนไขการวัด M0 – M3 ?</h3></div>
+                    <p style="font-size:0.9rem;color:#42526E;line-height:1.75;">
+                    ในกระดาษพิมพ์ยุคปัจจุบันมักมีการใส่ <strong>"สารเรืองแสง" (Optical Brighteners / OBA)</strong> เพื่อช่วยให้กระดาษดูขาวสว่างขึ้น ซึ่งสารเรืองแสงนี้จะทำให้สีที่ตามองเห็นเปลี่ยนไปตามปริมาณแสง UV ในบริเวณนั้น มาตรฐาน ISO จึงกำหนดโหมดการวัด M0 – M3 เพื่อให้เลือกใช้ได้ตรงกับงานจริงอย่างเข้าใจง่าย:
+                    </p>
+                    <table class="tech-table" style="margin-top:1rem;">
+                        <thead>
+                            <tr><th>โหมด</th><th>ลักษณะการทำงาน</th><th>การนำไปใช้งานจริง</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>M0</strong></td>
+                                <td>โหมดดั้งเดิม (สภาพแสงทั่วไป ไม่ควบคุม UV)</td>
+                                <td>ใช้กับกระดาษที่ไม่มีสารเรืองแสง หรือเมื่อต้องการเทียบเคียงค่ากับเครื่องวัดรุ่นเก่า</td>
+                            </tr>
+                            <tr>
+                                <td><strong>M1</strong></td>
+                                <td><strong>มาตรฐานหลักปัจจุบัน</strong> (จำลองแสงมาตรฐาน D50)</td>
+                                <td>ใช้สำหรับงานวัดค่าสี (Colorimetry) บนกระดาษที่มีสารเรืองแสง เพื่อให้ค่าสีที่วัดได้ตรงกับที่ตาเรามองเห็นในตู้ตรวจเช็กสีมาตรฐาน D50</td>
+                            </tr>
+                            <tr>
+                                <td><strong>M2</strong></td>
+                                <td>โหมดตัดแสง UV (UV-Cut)</td>
+                                <td>ใช้วัดเพื่อดูผลต่างว่าสารเรืองแสงในกระดาษส่งผลกระทบทำให้สีเพี้ยนไปมากน้อยแค่ไหน</td>
+                            </tr>
+                            <tr>
+                                <td><strong>M3</strong></td>
+                                <td>โหมดตัดแสงสะท้อนผิว (ใส่ฟิลเตอร์โพลาไรซ์)</td>
+                                <td><strong>มาตรฐานหลักสำหรับวัดความหนาแน่นหมึก (Density)</strong> บนแท่นพิมพ์ เพื่อให้ค่าที่วัดได้ระหว่าง 'หมึกเปียก' กับ 'หมึกแห้ง' ใกล้เคียงกันมากที่สุด</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="guide-box">
+                    <h4>สรุปวิธีเลือกใช้งานง่าย ๆ</h4>
+                    <p>• หากต้องการ <strong>วัดค่าสี / เช็กความถูกต้องของเฉดสี (CIE L*a*b*, ΔE)</strong> ➔ ให้เลือกใช้ <strong>M1</strong><br>
+                    • หากต้องการ <strong>วัดความหนาแน่นหมึกหน้าแท่นพิมพ์ (Density)</strong> ➔ ให้เลือกใช้ <strong>M3</strong></p>
+                </div>
+            `
+        },
+
+        auto_density: {
+            title: "Automatic Density",
+            subtitle: "การวัดค่าความหนาแน่นหมึกหรือเปอร์เซ็นต์เม็ดสกรีนแบบอัตโนมัติ",
+            lcd: { title:"AUTOMATIC DENSITY", big:"C 1.38", color:"#00A8E8", func:"Automatic Density", cond:"ISO T/noPOL/ABS",
+                extra:`<div class="cmyk-boxes" style="margin-top:10px;"><div class="cmyk-box"><span class="color-badge badge-c">C</span><span>1.38</span></div><div class="cmyk-box"><span class="color-badge badge-m">M</span><span>--</span></div><div class="cmyk-box"><span class="color-badge badge-y">Y</span><span>--</span></div><div class="cmyk-box"><span class="color-badge badge-k">K</span><span>--</span></div></div>` },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">เลือกฟังก์ชัน Automatic Density</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ (Solid Patch)</div><div class="step-desc">เครื่องตรวจจับแม่สี CMYK โดยอัตโนมัติและแสดงค่าความหนาแน่นทันที</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีน (Screen Patch)</div><div class="step-desc">เครื่องจะสลับไปแสดงผล Dot Area และคำนวณ Dot Gain ให้อัตโนมัติ</div></li>
+                    </ul>
+                </div>
+                <div class="figure-container">
+                    <svg width="100%" height="45" viewBox="0 0 500 45" style="border-radius:4px;overflow:hidden;">
+                        <rect x="0" y="5" width="45" height="30" fill="#111"/>
+                        <rect x="45" y="5" width="45" height="30" fill="#00A8E8"/>
+                        <rect x="90" y="5" width="45" height="30" fill="#E6007E"/>
+                        <rect x="135" y="5" width="45" height="30" fill="#F9D423"/>
+                        <rect x="180" y="5" width="55" height="30" fill="#777"/>
+                        <rect x="235" y="5" width="55" height="30" fill="#2B3544"/>
+                        <rect x="290" y="5" width="45" height="30" fill="#111"/>
+                        <rect x="335" y="5" width="45" height="30" fill="#00A8E8"/>
+                        <rect x="380" y="5" width="45" height="30" fill="#E6007E"/>
+                        <rect x="425" y="5" width="45" height="30" fill="#F9D423"/>
+                        <polygon points="67,42 61,48 73,48" fill="#00875A"/>
+                    </svg>
+                    <div class="figure-caption">แถบควบคุม TECHKON TCS แสดงตำแหน่งการวัดจุดทึบและจุดเปอร์เซ็นต์เม็ดสกรีนตามลำดับ</div>
+                </div>
+            `
+        },
+
+        densities_cmyk: {
+            title: "Densities CMYK",
+            subtitle: "การแสดงค่าความหนาแน่นย่อยของสี C M Y K พร้อมกัน และค่า Dmax สำหรับสีพิเศษ จากการวัดครั้งเดียว",
+            lcd: { title:"DENSITIES CMYK", big:"Dmax 1.88", color:"#FFAB00", func:"Densities CMYK", cond:"ISO E/POL/PAP",
+                extra:`<div class="cmyk-boxes" style="margin-top:10px;"><div class="cmyk-box"><span class="color-badge badge-c">C</span><span>0.20</span></div><div class="cmyk-box"><span class="color-badge badge-m">M</span><span>1.47</span></div><div class="cmyk-box"><span class="color-badge badge-y">Y</span><span>0.67</span></div><div class="cmyk-box"><span class="color-badge badge-k">K</span><span>0.61</span></div></div><div style="font-size:0.68rem;text-align:center;margin-top:8px;color:#36B37E;">Peak Wavelength: 560 nm</div>` },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">เลือกฟังก์ชัน Densities CMYK</div></li>
+                        <li class="step-item"><div class="step-title">วางหัววัดบนจุดที่ต้องการแล้วกดวัดค่า</div><div class="step-desc">เครื่องแสดงค่าความหนาแน่นย่อยของทั้ง 4 สีพร้อมกันในหน้าจอเดียว</div></li>
+                        <li class="step-item"><div class="step-title">กรณีวัดจุดสีพิเศษ (Spot Color)</div><div class="step-desc">เครื่องจะแสดงค่า Dmax (ความหนาแน่นสูงสุด) พร้อมความยาวคลื่นพีคให้โดยอัตโนมัติในหน้าจอเดียวกัน</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        dot_area: {
+            title: "Dot Area",
+            subtitle: "การวัดเปอร์เซ็นต์เม็ดสกรีนจริงบนกระดาษ เทียบกับค่าตามไฟล์ต้นฉบับ",
+            lcd: { title:"DOT AREA", big:"59.0 %", color:"#00A8E8", func:"Dot Area", cond:"ISO E/POL/PAP",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#aaa;'>Murray-Davies Formula<br>Solid Reference D: 1.84</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">เลือกฟังก์ชัน Dot Area</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ (Solid 100%) ก่อนเสมอ</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีนที่ต้องการต่อ</div><div class="step-desc">เครื่องคำนวณ Dot Area ด้วยสูตร Murray-Davies ให้โดยอัตโนมัติ</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        dot_gain: {
+            title: "Dot Gain / Print Contrast",
+            subtitle: "การวัดอัตราการขยายตัวของเม็ดสกรีนและค่าความคมชัดของภาพพิมพ์",
+            lcd: { title:"DOT GAIN / CONTRAST", big:"80% +11.2%", color:"#36B37E", func:"Dot Gain/Contrast", cond:"ISO T/noPOL/ABS",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#aaa;'>Solid Reference D: 1.61<br>Print Contrast: 0.37 (37%)</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">ตั้งค่าเปอร์เซ็นต์ที่ต้องการวัดล่วงหน้าใน Dot Gain Setup (เช่น 40%, 80%)</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ (Solid) ก่อนเสมอ</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีนตามลำดับลูกศรบนหน้าจอ</div></li>
+                        <li class="step-item"><div class="step-title">อ่านค่า Dot Gain และค่า Print Contrast ที่แสดงผลอัตโนมัติ</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        trapping: {
+            title: "Trapping (การพิมพ์ทับสี)",
+            subtitle: "การตรวจสอบประสิทธิภาพการเกาะติดของหมึกพิมพ์เมื่อพิมพ์ทับซ้อนกัน",
+            lcd: { title:"INK TRAPPING", big:"73.2 %", color:"#36B37E", func:"Trapping (Preucil)", cond:"ISO E/POL/PAP",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;'>1st Ink: 0.20 D | 2nd Ink: 1.33 D<br>Overprint Patch: 73.2%</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งานตามสูตร Preucil</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">วัดสีเดี่ยวที่พิมพ์ก่อน (1st Printed Ink)</div><div class="step-desc">เช่น Cyan</div></li>
+                        <li class="step-item"><div class="step-title">วัดสีเดี่ยวที่พิมพ์ทีหลัง (2nd Printed Ink)</div><div class="step-desc">เช่น Magenta</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดที่พิมพ์ทับซ้อนกัน (Overprint Patch C+M)</div><div class="step-desc">เครื่องคำนวณและแสดงค่า Trapping เป็นเปอร์เซ็นต์ทันที</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        printing_curve: {
+            title: "Printing Curve",
+            subtitle: "การประเมินเส้นโค้งการถ่ายทอดเม็ดสกรีนตลอดทั้งช่วงโทนภาพ",
+            lcd: { title:"PRINTING CURVE", big:"90% +7.3%", color:"#36B37E", func:"Printing Curve", cond:"ISO Class 1/2",
+                extra:"<div style='font-size:0.7rem;color:#36B37E;text-align:center;margin-top:8px;'>ภายในขอบเขต Tolerance ISO PC 1/2</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">ตั้งค่าที่เมนู Printing Curve Setup</div><div class="step-desc">เลือกมาตรฐาน tolerance ความถี่สกรีน และช่วงเปอร์เซ็นต์ที่ต้องการวัด เช่น ทีละ 5% หรือ 10%</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ 100% ก่อน</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีนตามลำดับ หรือใช้วิธีสแกนลากผ่านแถบสเต็ปเวดจ์</div></li>
+                        <li class="step-item"><div class="step-title">อ่านผลกราฟเส้นโค้งที่พล็อตพร้อมแถบ Tolerance</div></li>
+                    </ul>
+                </div>
+                <div class="figure-container">
+                    <svg width="100%" height="110" viewBox="0 0 400 110" style="background:#111827;border-radius:6px;">
+                        <line x1="40" y1="90" x2="380" y2="90" stroke="#4B5563" stroke-width="1"/>
+                        <line x1="40" y1="10" x2="40" y2="90" stroke="#4B5563" stroke-width="1"/>
+                        <path d="M 40 90 Q 200 15 380 90" fill="none" stroke="rgba(54, 179, 126, 0.35)" stroke-width="24"/>
+                        <path d="M 40 90 Q 200 20 380 90" fill="none" stroke="#36B37E" stroke-width="3"/>
+                        <circle cx="210" cy="40" r="4" fill="#FFF"/>
+                        <circle cx="340" cy="74" r="4" fill="#00A8E8"/>
+                        <text x="345" y="70" fill="#00A8E8" font-size="10" font-family="monospace">90% +7.3%</text>
+                        <text x="40" y="104" fill="#9CA3AF" font-size="9" font-family="monospace">0%</text>
+                        <text x="200" y="104" fill="#9CA3AF" font-size="9" font-family="monospace">50%</text>
+                        <text x="360" y="104" fill="#9CA3AF" font-size="9" font-family="monospace">100%</text>
+                    </svg>
+                    <div class="figure-caption">กราฟเส้นโค้งการถ่ายทอดเม็ดสกรีน (Printing Curve) พร้อมแถบ Tolerance สีเขียว</div>
+                </div>
+            `
+        },
+
+        printing_plate: {
+            title: "Printing Plate",
+            subtitle: "การตรวจสอบเปอร์เซ็นต์เม็ดสกรีนบนแผ่นเพลทก่อนขึ้นแท่นพิมพ์",
+            lcd: { title:"PRINTING PLATE", big:"C 39.3 %", color:"#00B8D9", func:"Printing Plate", cond:"Yule-Nielsen n=1.20",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#aaa;'>Plate Solid D: 1.38</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">ล้างสารเคลือบยางออกจากแผ่นเพลทก่อนวัด</div><div class="step-desc">มิฉะนั้นแสงจะสูญเสียและค่าที่วัดได้จะคลาดเคลื่อน</div></li>
+                        <li class="step-item"><div class="step-title">คาลิเบรทบนพื้นที่เพลทที่ไม่มีภาพ</div><div class="step-desc">เสมือนการคาลิเบรทบนกระดาษขาว</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ 100%</div><div class="step-desc">เครื่องเลือกช่องสีที่ให้คอนทราสต์สูงสุดโดยอัตโนมัติ</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีนที่ต้องการ</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        slur_doubling: {
+            title: "Slur & Doubling",
+            subtitle: "การตรวจจับความผิดเพี้ยนทางเรขาคณิตของเม็ดสกรีนที่เกิดจากกลไกการพิมพ์",
+            lcd: { title:"SLUR AND DOUBLING", big:"+2.2 %", color:"#36B37E", func:"Slur and Doubling", cond:"ISO E/POL/PAP",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#36B37E;'>H: 65.6% | V: 63.4%<br>สถานะ: อยู่ในเกณฑ์ปกติ (ไม่เกิน 5%)</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">เตรียมแถบควบคุมที่มีลายเส้นแนวตั้งและแนวนอน (เช่น TECHKON TCS)</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ 100% ของสีที่ต้องการ</div></li>
+                        <li class="step-item"><div class="step-title">วัดลายเส้นแนวนอน (Horizontal Lines)</div></li>
+                        <li class="step-item"><div class="step-title">วัดลายเส้นแนวตั้ง (Vertical Lines)</div><div class="step-desc">เครื่องคำนวณค่า Slur/Doubling เป็นเปอร์เซ็นต์ให้โดยอัตโนมัติ</div></li>
+                    </ul>
+                </div>
+                <div class="figure-container">
+                    <svg width="100%" height="60" viewBox="0 0 300 60">
+                        <g transform="translate(60, 5)">
+                            <rect width="50" height="50" fill="#FFF" stroke="#CBD5E1"/>
+                            <line x1="0" y1="10" x2="50" y2="10" stroke="#E6007E" stroke-width="3"/>
+                            <line x1="0" y1="20" x2="50" y2="20" stroke="#E6007E" stroke-width="3"/>
+                            <line x1="0" y1="30" x2="50" y2="30" stroke="#E6007E" stroke-width="3"/>
+                            <line x1="0" y1="40" x2="50" y2="40" stroke="#E6007E" stroke-width="3"/>
+                        </g>
+                        <g transform="translate(190, 5)">
+                            <rect width="50" height="50" fill="#FFF" stroke="#CBD5E1"/>
+                            <line x1="10" y1="0" x2="10" y2="50" stroke="#E6007E" stroke-width="3"/>
+                            <line x1="20" y1="0" x2="20" y2="50" stroke="#E6007E" stroke-width="3"/>
+                            <line x1="30" y1="0" x2="30" y2="50" stroke="#E6007E" stroke-width="3"/>
+                            <line x1="40" y1="0" x2="40" y2="50" stroke="#E6007E" stroke-width="3"/>
+                        </g>
+                    </svg>
+                    <div class="figure-caption">ลักษณะแพทช์ลายเส้นแนวนอนและแนวตั้งบนแถบควบคุมสำหรับตรวจสอบ Slur & Doubling</div>
+                </div>
+            `
+        },
+
+        density_graph: {
+            title: "กราฟความหนาแน่นสีพิเศษ (Density Graph)",
+            subtitle: "การควบคุมคุณภาพสีพิเศษที่ไม่ใช่ CMYK ด้วยข้อมูลสเปกตรัมเต็มรูปแบบ",
+            lcd: { title:"DENSITY GRAPH", big:"D 1.57", color:"#FFAB00", func:"Density Graph", cond:"@ 580 nm",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#aaa;'>ความยาวคลื่นพีค (Dmax): 580 nm</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">เลือกฟังก์ชัน Density Graph</div></li>
+                        <li class="step-item"><div class="step-title">วางหัววัดบนจุดสีพิเศษที่ต้องการแล้วกดวัดค่า</div></li>
+                        <li class="step-item"><div class="step-title">อ่านผลกราฟความหนาแน่นสเปกตรัมช่วง 400–700 nm พร้อมจุดพีค Dmax</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        expresso_mini: {
+            title: "ExPresso Mini",
+            subtitle: "การติดตามความเสถียรของโซนหมึกระหว่างการพิมพ์แบบเรียลไทม์",
+            lcd: { title:"EXPRESSO MINI", big:"C +0.02", color:"#00A8E8", func:"ExPresso Mini", cond:"ISO E/POL/PAP",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#36B37E;'>REF 1: 1.35 D (±0.06)<br>บันทึกล่าสุด 10 ค่าต่อเนื่อง</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">เลือกฟังก์ชัน ExPresso Mini</div></li>
+                        <li class="step-item"><div class="step-title">วัดค่าต่อเนื่องจากแถบควบคุมของแผ่นพิมพ์ที่สุ่มตรวจ</div></li>
+                        <li class="step-item"><div class="step-title">ตรวจดูแนวโน้มกราฟ 10 ค่าล่าสุดเทียบกับเส้นค่าเฉลี่ยและ Tolerance</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        cielab_d: {
+            title: "CIE L*a*b* + D",
+            subtitle: "การวัดค่าสีเชิงพิกัดมาตรฐานสากล พร้อมค่าความหนาแน่นหมึก CMYK และความยาวคลื่นพีคในหน้าจอเดียว",
+            lcd: { title:"CIE L*a*b* + D", big:"L* 54.67", color:"#00B8D9", func:"CIE L*a*b* + D", cond:"D50 2°/noPOL/ABS/M0",
+                extra:`
+                    <div style='font-size:0.72rem;text-align:center;margin-top:4px;'>a*: -34.40 &nbsp;|&nbsp; b*: -49.70</div>
+                    <div style='font-size:0.75rem;text-align:center;margin-top:6px;color:#36B37E;'>C &nbsp; 1.39 D &nbsp; <span style='font-size:0.62rem;color:#888;'>noPOL/ABS ISO T</span></div>
+                    <div style='font-size:0.68rem;text-align:center;margin-top:2px;color:#FFAB00;'>D(620nm) &nbsp; 1.43 D</div>
+                ` },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>หลักการทำงานและขั้นตอนการใช้งาน</h3></div>
+                    <p style="font-size:0.9rem;color:#42526E;line-height:1.75;margin-bottom:1rem;">
+                    ฟังก์ชัน <strong>CIE L*a*b* + D</strong> เป็นการผสานความสามารถของระบบ <strong>Colorimetry</strong> (วัดค่าสีเชิงพิกัดสัมบูรณ์) และ <strong>Densitometry</strong> (วัดความหนาแน่นหมึก) เข้าด้วยกันในการกดวัดเพียงครั้งเดียว ช่วยให้ช่างพิมพ์ควบคุมทั้งความถูกต้องของเฉดสีตามมาตรฐาน และควบคุมปริมาณการจ่ายหมึกบนแท่นพิมพ์ได้พร้อมกัน
+                    </p>
+                    <ul class="step-list">
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 1: คาลิเบรทแผ่นขาวสัมบูรณ์ (Absolute White Calibration)</div>
+                            <div class="step-desc">วางตัวเครื่องลงบนแท่นชาร์จ (Charging Console) ให้ตรงกับแผ่นเซรามิกขาว เลื่อนเคอร์เซอร์ไปที่ไอคอน <strong>CAL</strong> แล้วกดปุ่มวัดค่าสีเขียวหรือปุ่ม Enter เพื่อตั้งค่าอ้างอิงแสงสะท้อนสัมบูรณ์สำหรับการคำนวณค่าสีพิกัดสากล CIE L*a*b*</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 2: คาลิเบรทบนกระดาษขาว (Paper White Calibration)</div>
+                            <div class="step-desc">เลื่อนเคอร์เซอร์ไปที่ไอคอนรูปกระดาษซ้อน แล้ววางหัววัดบนกระดาษเปล่าของงานพิมพ์จริง กดปุ่มวัดค่าสีเขียว เพื่อตั้งจุดศูนย์ความหนาแน่น D = 0.00 สำหรับการคำนวณค่าความหนาแน่นหมึก (Density) บนเนื้อกระดาษจริง</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 3: ตรวจสอบการตั้งค่าเงื่อนไขการวัด (Measurement Conditions)</div>
+                            <div class="step-desc">ตรวจสอบว่าตั้งค่าเงื่อนไขการวัดเป็น: <strong>Illuminant: D50</strong>, <strong>Observer: 2°</strong>, <strong>White Reference: Auto หรือ Absolute</strong> และ <strong>Polarizing Filter: Off หรือ Auto</strong></div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 4: วัดค่าสีอ้างอิงต้นแบบ (Reference Measurement)</div>
+                            <div class="step-desc">เลื่อนเคอร์เซอร์ไปที่แท็บ <strong>Reference</strong> วางหัววัดบนชิ้นงานต้นแบบแล้วกดปุ่มวัดค่าสีเขียว (หรือเลือกโหลดค่าสีจาก Color Library / Color Book เช่น HKS, Pantone ในเครื่อง) เพื่อใช้เป็นค่าเป้าหมาย</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 5: วัดค่าตัวอย่างชิ้นงาน (Sample Measurement)</div>
+                            <div class="step-desc">เลื่อนเคอร์เซอร์กลับมาที่แท็บ <strong>Sample</strong> วางหัววัดให้แนบสนิทบนจุดตัวอย่างที่ต้องการวัด แล้วกดปุ่มวัดค่าสีเขียว 1 ครั้ง เครื่องจะประมวลผลสเปกตรัมภายใน 1 วินาที</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 6: อ่านผลการวัด 2 ด้านพร้อมกันบนหน้าจอ</div>
+                            <div class="step-desc">
+                                • <strong>ส่วนบนของหน้าจอ:</strong> แสดงพิกัดสีสากล <strong>CIE L*a*b*</strong> (ความสว่าง L*, แกนเขียว-แดง a*, แกนน้ำเงิน-เหลือง b*) พร้อมกล่องตัวอย่างเฉดสีจำลอง<br>
+                                • <strong>ส่วนล่างของหน้าจอ:</strong> แสดงค่าความหนาแน่น (Density) ของแม่สี CMYK ที่เด่นที่สุดในตัวอย่างนั้น (เช่น <span style="color:#00A8E8;font-weight:bold;">C 1.39 D</span>) พร้อมทั้งค่าความหนาแน่นสเปกตรัมสูงสุด <strong>Dmax</strong> และความยาวคลื่นพีค (เช่น <span style="color:#FFAB00;font-weight:bold;">D(620nm) 1.43 D</span>)
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="figure-container">
+                    <svg width="100%" height="150" viewBox="0 0 320 150" style="background:#0F172A;border-radius:6px;padding:8px;">
+                        <rect x="10" y="5" width="300" height="140" rx="6" fill="#05070A" stroke="#1E293B" stroke-width="2"/>
+                        <text x="25" y="24" fill="#94A3B8" font-size="11" font-family="monospace">Sample_9</text>
+                        <text x="25" y="50" fill="#FFFFFF" font-size="16" font-family="monospace" font-weight="bold">L*  54.67</text>
+                        <text x="25" y="70" fill="#FFFFFF" font-size="16" font-family="monospace" font-weight="bold">a* -34.40</text>
+                        <text x="25" y="90" fill="#FFFFFF" font-size="16" font-family="monospace" font-weight="bold">b* -49.70</text>
+                        <rect x="220" y="36" width="60" height="50" rx="4" fill="#0099FF" stroke="#38BDF8" stroke-width="1.5"/>
+                        <line x1="20" y1="102" x2="295" y2="102" stroke="#1E293B" stroke-width="1"/>
+                        <text x="25" y="122" fill="#00A8E8" font-size="16" font-family="monospace" font-weight="bold">C   1.39 D</text>
+                        <text x="180" y="118" fill="#64748B" font-size="9" font-family="monospace">noPOL / ABS</text>
+                        <text x="180" y="128" fill="#64748B" font-size="9" font-family="monospace">ISO T</text>
+                        <text x="25" y="138" fill="#F59E0B" font-size="12" font-family="monospace" font-weight="bold">D(620nm) 1.43 D</text>
+                    </svg>
+                    <div class="figure-caption">ภาพจำลองหน้าจอเครื่อง TECHKON SpectroDens ในฟังก์ชัน CIE L*a*b* + D</div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>ข้อควรทราบเรื่องค่าความหนาแน่นในโหมดนี้</strong>
+                    เนื่องจากฟังก์ชันนี้ทำงานในโหมด Colorimetry จึงใช้การวัดแบบไม่มีฟิลเตอร์โพลาไรซ์ (noPOL) ส่งผลให้ค่าความหนาแน่น Density ที่แสดงในหน้านี้ต่ำกว่าการวัดในโหมด Automatic Density ปกติที่เปิดฟิลเตอร์โพลาไรซ์
+                </div>
+            `
+        },
+
+        cielab: {
+            title: "CIE L*a*b*",
+            subtitle: "การวัดค่าสีเชิงพิกัดมาตรฐานสากล CIE 1976 และการวัดเปรียบเทียบค่าความคลาดเคลื่อนสี (ΔE*)",
+            lcd: { title:"CIE L*a*b*", big:"ΔE*ab 2.72", color:"#00B8D9", func:"CIE L*a*b*", cond:"D50 2°/noPOL/ABS/M1",
+                extra:`
+                    <div style='display:flex;justify-content:space-around;font-size:0.75rem;margin-top:6px;'>
+                        <span>ΔL* &nbsp;<b>2.40</b></span>
+                        <span>Δa* &nbsp;<b>-0.97</b></span>
+                        <span>Δb* &nbsp;<b>0.86</b></span>
+                    </div>
+                    <div style='display:flex;justify-content:center;gap:12px;margin-top:8px;'>
+                        <span style='font-size:0.64rem;color:#888;'>Ref: [ ฟ้า 1 ]</span>
+                        <span style='font-size:0.64rem;color:#36B37E;'>Sample: [ ฟ้า 2 ]</span>
+                    </div>
+                ` },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>หลักการและขั้นตอนการใช้งาน</h3></div>
+                    <p style="font-size:0.9rem;color:#42526E;line-height:1.75;margin-bottom:1rem;">
+                    ระบบสี <strong>CIE L*a*b*</strong> เป็นมาตรฐานสากลที่นิยมใช้สูงสุดในอุตสาหกรรมการพิมพ์ โดยอธิบายสีผ่าน 3 พิกัด:
+                    <strong>L*</strong> (ความสว่าง 0=ดำ ถึง 100=ขาว), <strong>a*</strong> (แกนเขียว [-] ถึง แดง [+]) และ <strong>b*</strong> (แกนน้ำเงิน [-] ถึง เหลือง [+])
+                    </p>
+                    <ul class="step-list">
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนเตรียมเครื่อง: คาลิเบรทแผ่นขาวสัมบูรณ์ (Absolute White Calibration)</div>
+                            <div class="step-desc">ต้องวางเครื่องบนแท่นชาร์จที่มีแผ่นเซรามิกขาวสัมบูรณ์ เลื่อนเคอร์เซอร์ไปที่ไอคอน <strong>CAL</strong> แล้วกดปุ่มวัดค่าสีเขียว (ห้ามคาลิเบรทบนกระดาษขาวธรรมดาสำหรับการวัดค่าสีเชิงมาตรฐาน)</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">กรณีที่ 1: การวัดค่าสีตัวอย่างเดี่ยว (Absolute Measurement Mode - DELTA ปิด)</div>
+                            <div class="step-desc">
+                                1. เลือกฟังก์ชัน <strong>CIE L*a*b*</strong> จากเมนู<br>
+                                2. ตรวจสอบว่าแท็บด้านบนอยู่ที่ <strong>Sample</strong><br>
+                                3. วางหัววัดบนชิ้นงานแล้วกดปุ่มวัดค่าสีเขียว 1 ครั้ง<br>
+                                4. หน้าจอจะแสดงค่าพิกัด L*, a*, b* ของชิ้นงานตัวอย่างนั้นทันที
+                            </div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">กรณีที่ 2: การวัดเปรียบเทียบค่าความคลาดเคลื่อนสี (Color Comparison / DELTA Mode - DELTA เปิด)</div>
+                            <div class="step-desc">
+                                1. กดเลือก Soft Key สัญลักษณ์รูปสามเหลี่ยม <strong>DELTA (Δ)</strong> ทางขวาของจอเพื่อเปิดโหมดเปรียบเทียบ<br>
+                                2. เลื่อนเคอร์เซอร์ไปที่แท็บ <strong>Reference</strong> แล้วกดวัดชิ้นงานต้นแบบ (หรือเลือกโหลดค่าสีจาก Color Library ในเครื่อง)<br>
+                                3. เลื่อนเคอร์เซอร์กลับมาที่แท็บ <strong>Sample</strong> แล้วกดวัดชิ้นงานที่ต้องการตรวจสอบ<br>
+                                4. หน้าจอจะคำนวณและแสดงผลค่าความคลาดเคลื่อนสีรวม <strong>ΔE*ab</strong> (ทศนิยม 2 ตำแหน่ง) พร้อมค่าผลต่างแยกแกน <strong>ΔL*, Δa*, Δb*</strong> และแสดงช่องเปรียบเทียบสี Reference vs Sample
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="figure-container">
+                    <svg width="100%" height="150" viewBox="0 0 320 150">
+                        <ellipse cx="160" cy="75" rx="90" ry="45" fill="none" stroke="#64748B" stroke-dasharray="4,4"/>
+                        <circle cx="160" cy="75" r="50" fill="url(#sphereGrad)" opacity="0.85"/>
+                        <line x1="160" y1="10" x2="160" y2="140" stroke="#0F172A" stroke-width="2"/>
+                        <polygon points="160,5 156,15 164,15" fill="#0F172A"/>
+                        <text x="168" y="20" fill="#0F172A" font-size="11" font-weight="bold">L* = 100 (White)</text>
+                        <text x="168" y="142" fill="#0F172A" font-size="11" font-weight="bold">L* = 0 (Black)</text>
+                        <line x1="70" y1="75" x2="250" y2="75" stroke="#00875A" stroke-width="2"/>
+                        <text x="255" y="79" fill="#DE350B" font-size="10" font-weight="bold">+a* (Red)</text>
+                        <text x="10" y="79" fill="#00875A" font-size="10" font-weight="bold">-a* (Green)</text>
+                        <line x1="120" y1="105" x2="200" y2="45" stroke="#0052CC" stroke-width="2"/>
+                        <text x="204" y="44" fill="#D97706" font-size="10" font-weight="bold">+b* (Yellow)</text>
+                        <text x="60" y="115" fill="#0052CC" font-size="10" font-weight="bold">-b* (Blue)</text>
+                        <defs>
+                            <radialGradient id="sphereGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#FFFFFF"/>
+                                <stop offset="70%" stop-color="#94A3B8"/>
+                                <stop offset="100%" stop-color="#334155"/>
+                            </radialGradient>
+                        </defs>
+                    </svg>
+                    <div class="figure-caption">ปริภูมิทรงกลมสี 3 มิติ CIE L*a*b* (CIE 1976 Color Space)</div>
+                </div>
+
+                <div class="guide-box">
+                    <h4>เกณฑ์การประเมินค่าความคลาดเคลื่อนสี (ΔE*)</h4>
+                    <p>
+                    • <strong>ΔE* = 0:</strong> สีเหมือนกันทุกประการ<br>
+                    • <strong>ΔE* &lt; 1.0:</strong> สายตามนุษย์แทบไม่สามารถสังเกตเห็นความแตกต่างได้<br>
+                    • <strong>ΔE* ≈ 2.0 – 3.0:</strong> เกณฑ์มาตรฐานยอมรับได้สำหรับงานพิมพ์คุณภาพสูงตามมาตรฐาน ISO 12647<br>
+                    • <strong>ΔE* ≈ 5.0:</strong> ระดับที่สายตามนุษย์เริ่มสังเกตเห็นความแตกต่างของสีได้อย่างชัดเจนเมื่อวางเทียบกันภายใต้สภาพแสงเดียวกัน
+                    </p>
+                </div>
+            `
+        },
+
+        color_circle: {
+            title: "CIE Color Circle",
+            subtitle: "การแสดงตำแหน่งและทิศทางความเบี่ยงเบนของสีบนวงล้อสีเสมือนจริง พร้อมระดับความสว่าง L*",
+            lcd: { title:"CIE COLOR CIRCLE", big:"ΔE*ab 73.54", color:"#36B37E", func:"CIE Color Circle", cond:"D50 2°/noPOL/ABS/M1",
+                extra:`
+                    <div class="color-wheel-block">
+                        <div class="color-wheel-readout">
+                            Δ<b>L*</b> &nbsp;46.23<br>
+                            Δ<b>a*</b> &nbsp;41.94<br>
+                            Δ<b>b*</b> &nbsp;38.88<br>
+                            Δ<b>E*</b>ab 73.54
+                        </div>
+                        <div class="color-wheel-outer">
+                            <div class="color-wheel"></div>
+                            <div class="color-wheel-marker" style="top:38%;left:64%;"></div>
+                            <span class="color-wheel-axis-label cwl-top">+b*</span>
+                            <span class="color-wheel-axis-label cwl-bottom">-b*</span>
+                            <span class="color-wheel-axis-label cwl-left">-a*</span>
+                            <span class="color-wheel-axis-label cwl-right">+a*</span>
+                        </div>
+                    </div>
+                ` },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>หลักการและขั้นตอนการใช้งาน</h3></div>
+                    <p style="font-size:0.9rem;color:#42526E;line-height:1.75;margin-bottom:1rem;">
+                    ฟังก์ชัน <strong>CIE Color Circle</strong> แสดงผลพิกัดสีเชิงภาพ (Graphical Color Space) บนวงล้อสี 2 มิติ (ระนาบแกน a*-b*) ร่วมกับแถบสเกลระดับความสว่าง L* (0–100) ทางด้านซ้าย ทำให้มองเห็นทิศทางความเบี่ยงเบนของเฉดสีได้อย่างชัดเจนโดยไม่ต้องตีความจากตัวเลขพิกัดเพียงอย่างเดียว
+                    </p>
+                    <ul class="step-list">
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 1: คาลิเบรทแผ่นขาวสัมบูรณ์ (Absolute White Calibration)</div>
+                            <div class="step-desc">วางเครื่องบนแท่นชาร์จ เลื่อนไปที่ไอคอน <strong>CAL</strong> แล้วกดปุ่มวัดค่าสีเขียวหรือปุ่ม Enter เพื่อตั้งค่ามาตรฐานแสงสะท้อนสัมบูรณ์</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 2: เลือกรูปแบบการแสดงพิกัดสี (CIE Color Circle Setup)</div>
+                            <div class="step-desc">ในเมนูเงื่อนไขการวัด สามารถเลือกรูปแบบการแสดงค่าได้ 2 รูปแบบ:<br>
+                            • <strong>L*a*b*:</strong> แสดงพิกัดฉาก L* (ความสว่าง), a* (แกนเขียว-แดง), b* (แกนน้ำเงิน-เหลือง)<br>
+                            • <strong>L*C*h°:</strong> แสดงพิกัดเชิงขั้ว L* (ความสว่าง), C* (Chroma - ความสดของสี), h° (Hue - มุมเฉดสี)</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 3: เลือกระหว่างโหมดวัดค่าเดี่ยว (Absolute) หรือโหมดเปรียบเทียบ (DELTA Mode)</div>
+                            <div class="step-desc">
+                                • <strong>โหมดวัดค่าเดี่ยว (DELTA ปิด):</strong> วางหัววัดบนตัวอย่างแล้วกดปุ่มวัดค่า เครื่องจะพล็อตจุดตำแหน่งสีลงบนวงล้อ พร้อมแสดงพิกัด L*a*b* หรือ L*C*h°<br>
+                                • <strong>โหมดเปรียบเทียบ (DELTA เปิด - รูปสามเหลี่ยม Δ):</strong> วัดค่าสีต้นแบบ (Reference) ก่อน จากนั้นวัดค่าสีตัวอย่าง (Sample) เครื่องจะแสดงเวกเตอร์ทิศทางความเบี่ยงเบนของสีตัวอย่างเทียบกับต้นแบบ พร้อมค่าความคลาดเคลื่อน <strong>ΔL*, Δa*, Δb* (หรือ ΔC*, Δh*) และ ΔE*ab</strong>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="guide-box">
+                    <h4>การแปลความหมายของตำแหน่งบนวงล้อสี</h4>
+                    <p>
+                    • <strong>แกนแนวตั้ง (+b* / -b*):</strong> ด้านบน (+b*) แสดงทิศทางสีเหลือง / ด้านล่าง (-b*) แสดงทิศทางสีน้ำเงิน<br>
+                    • <strong>แกนแนวนอน (+a* / -a*):</strong> ด้านขวา (+a*) แสดงทิศทางสีแดง / ด้านซ้าย (-a*) แสดงทิศทางสีเขียว<br>
+                    • <strong>ระยะห่างจากศูนย์กลาง (Chroma):</strong> ยิ่งจุดสีอยู่ห่างจากจุดกึ่งกลางมาก แสดงว่าสีมีความสดและอิ่มตัวสูง<br>
+                    • <strong>แถบสเกลด้านซ้าย (L*):</strong> แสดงระดับความสว่างตั้งแต่ 0 (ดำสนิท) ถึง 100 (ขาวบริสุทธิ์)
+                    </p>
+                </div>
+            `
+        },
+
+        g7: {
+            title: "G7™ Calibration",
+            subtitle: "การช่วยปรับตั้งเครื่องพิมพ์และพรูฟตามวิธีการของ IDEAlliance",
+            lcd: { title:"G7™ CALIBRATION", big:"HR cmy", color:"#36B37E", func:"G7™", cond:"D50 2°/noPOL/ABS/M1",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#aaa;'>SC · HR · HC Evaluation</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ข้อกำหนดของแถบควบคุม</h3></div>
+                    <p style="font-size:0.88rem;color:#42526E;line-height:1.7;">ต้องมีแพทช์ตามที่กำหนด ได้แก่ CMYK 100%, RGB, กระดาษเปล่า (PAPER), K ที่ 25/50/75% รวมถึงแพทช์ Highlight Range (HR) ที่ 50/40/40, Highlight Contrast (HC) ที่ 25/19/19 และ Shadow Contrast (SC) ที่ 75/66/66</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน (โหมด Single Spot)</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">ตั้งค่าที่เมนู G7™ Setup</div><div class="step-desc">เลือกโหมด Single Spot สำหรับวัดทีละจุด หรือเลือกแถบควบคุมที่ตรงกันสำหรับโหมดสแกน</div></li>
+                        <li class="step-item"><div class="step-title">คาลิเบรทค่าขาวสัมบูรณ์ แล้ววัดกระดาษเปล่า</div><div class="step-desc">เครื่องแสดงผลค่าเบี่ยงเบน ΔE (2000) ของกระดาษเทียบกับค่าอ้างอิง</div></li>
+                        <li class="step-item"><div class="step-title">วัดแพทช์ผสม CMY ที่ 300% แล้ววัดจุดทึบ K</div><div class="step-desc">แสดงค่า ΔE ของแต่ละจุดเทียบกับค่าเป้าหมาย</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ CMY และแพทช์ทับซ้อน (RGB) ตามลำดับที่ต้องการ</div><div class="step-desc">เครื่องเปรียบเทียบกับค่าอ้างอิงและแสดงเครื่องหมายถูกหรือกากบาท พร้อมคำแนะนำทิศทางการปรับ SC, HR และ HC</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        remission_curve: {
+            title: "Remission Curve",
+            subtitle: "การแสดงกราฟค่าการสะท้อนแสงตลอดช่วงสเปกตรัม ซึ่งเป็นข้อมูลสีแบบละเอียดที่สุดของเครื่อง",
+            lcd: { title:"REMISSION CURVE", big:"400–700 nm", color:"#00B8D9", func:"Remission Curve", cond:"D50 2°/noPOL/ABS/M1",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#aaa;'>ความละเอียด: ทุก 10 nm</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">วัดจุดตัวอย่างที่ต้องการวิเคราะห์</div></li>
+                        <li class="step-item"><div class="step-title">อ่านกราฟค่าการสะท้อนแสง</div><div class="step-desc">แสดงผลครบทุกช่วงคลื่น 400–700 นาโนเมตร ทีละ 10 นาโนเมตร ค่าการสะท้อนแสงอยู่ในช่วง 0 (ไม่สะท้อนแสงเลย) ถึง 1 (สะท้อนแสงสมบูรณ์)</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        ink_check: {
+            title: "InkCheck",
+            subtitle: "การควบคุมคุณภาพสีพิมพ์และสีพิเศษ (Spot Color) พร้อมคำแนะนำการปรับความหนาแน่นหมึกหน้าแท่นพิมพ์",
+            lcd: { title:"INKCHECK", big:"+0.11 D", color:"#FFAB00", func:"InkCheck", cond:"D50 2°/noPOL/ABS/M1",
+                extra:`
+                    <div style='font-size:0.75rem;text-align:center;margin-top:6px;color:#36B37E;'>คำแนะนำการปรับหมึก: +8.8% (+0.11 D)</div>
+                    <div style='font-size:0.72rem;text-align:center;margin-top:2px;'>ΔE 4.5 &nbsp;➔&nbsp; คาดว่าจะลดเหลือ 1.4</div>
+                    <div style='font-size:0.65rem;color:#888;text-align:center;margin-top:3px;'>D_sample: 1.24 D | D_opt: 1.35 D (440nm)</div>
+                ` },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>หลักการและขั้นตอนการใช้งาน</h3></div>
+                    <p style="font-size:0.9rem;color:#42526E;line-height:1.75;margin-bottom:1rem;">
+                    ฟังก์ชัน <strong>InkCheck</strong> รวมจุดเด่นของการวัดค่าสีเชิงมาตรฐาน (Colorimetry: ΔE) เข้ากับการปรับตั้งความหนาแน่นหมึกที่ช่างพิมพ์คุ้นเคย (Densitometry: Density) โดยคำนวณและให้คำแนะนำว่า <strong>"ควรเพิ่มหรือลดปริมาณหมึกกี่ Density หรือกี่ % เพื่อให้ค่าสี ΔE ต่ำที่สุดเท่าที่จะทำได้"</strong> รองรับทั้งแม่สี CMYK ตามมาตรฐาน ISO 12647 และสีพิเศษ (Spot Colors) ทุกเฉดสี
+                    </p>
+                    <ul class="step-list">
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 1: เลือกชุดค่าสีอ้างอิง (Color Book / Reference Setup)</div>
+                            <div class="step-desc">ในแท็บ Reference ให้เลือกชุดค่าสีมาตรฐานตามประเภทกระดาษ (เช่น FOGRA 51 V3, ISO 2013 CD1 BB สำหรับ CMYK) หรือเลือกคลังสีพิเศษ (เช่น HKS, Pantone หรือไฟล์ดิจิทัล CxF ที่โหลดผ่านโปรแกรม SpectroConnect)</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 2: ทำการคาลิเบรทบนกระดาษขาวของงานจริง (Paper White Calibration)</div>
+                            <div class="step-desc">วางหัววัดบนพื้นที่กระดาษขาวที่ไม่มีการพิมพ์ของงานพิมพ์จริง แล้วกดยืนยันด้วยปุ่มวัดค่าสีเขียว เพื่อให้เครื่องชดเชยค่าสีของเนื้อกระดาษ</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 3: วัดจุดสีทึบบนงานพิมพ์ (Solid Patch Measurement)</div>
+                            <div class="step-desc">วางหัววัดบนแถบสีทึบของสีที่ต้องการควบคุม (CMYK หรือ Spot Color) แล้วกดปุ่มวัดค่าสีเขียว 1 ครั้ง</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-title">ขั้นตอนที่ 4: อ่านผลการวิเคราะห์และคำแนะนำการปรับหมึก</div>
+                            <div class="step-desc">
+                                • <strong>Density Trend / Rule Recommendation:</strong> คำแนะนำทิศทางการปรับปริมาณหมึก เช่น <span style="color:#00875A;font-weight:600;">+0.11 D (+8.8%)</span> หมายถึงแนะนำให้จ่ายหมึกเพิ่มขึ้น 0.11 Density<br>
+                                • <strong>Color Deviation (ΔE*):</strong> แสดงค่าความคลาดเคลื่อนสีปัจจุบันเทียบกับค่าอ้างอิง (เช่น ΔE = 4.5) และคาดการณ์ค่าความคลาดเคลื่อนต่ำสุดที่จะได้หลังปรับหมึกตามคำแนะนำ (เช่น คาดว่าลดเหลือ 1.4 ΔE)<br>
+                                • <strong>ดูกราฟแนวโน้ม (Next Display):</strong> กดปุ่ม Enter เลือกคำสั่ง <em>Next Display</em> เพื่อแสดงกราฟความสัมพันธ์ระหว่างค่า Density กับค่า ΔE และระบุจุดความหนาแน่นที่เหมาะสมที่สุด (Optimal Density: D_opt)
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="figure-container">
+                    <svg width="100%" height="110" viewBox="0 0 380 110" style="background:#0F172A;border-radius:6px;">
+                        <line x1="35" y1="85" x2="360" y2="85" stroke="#475569" stroke-width="1"/>
+                        <line x1="35" y1="15" x2="35" y2="85" stroke="#475569" stroke-width="1"/>
+                        <path d="M 50 20 Q 200 95 350 25" fill="none" stroke="#F59E0B" stroke-width="2.5"/>
+                        <circle cx="140" cy="55" r="4" fill="#EF4444"/>
+                        <text x="80" y="50" fill="#EF4444" font-size="9" font-family="monospace">Sample (ΔE 4.5, D 1.24)</text>
+                        <circle cx="210" cy="74" r="4" fill="#10B981"/>
+                        <line x1="210" y1="74" x2="210" y2="85" stroke="#10B981" stroke-dasharray="2,2"/>
+                        <text x="215" y="70" fill="#10B981" font-size="9" font-family="monospace">Optimal (ΔE 1.4, D 1.35)</text>
+                        <text x="10" y="20" fill="#94A3B8" font-size="9" font-family="monospace">ΔE</text>
+                        <text x="340" y="100" fill="#94A3B8" font-size="9" font-family="monospace">Density (D)</text>
+                    </svg>
+                    <div class="figure-caption">กราฟแสดงจุดต่ำสุดของค่าคลาดเคลื่อนสี (ΔEmin) เทียบกับความหนาแน่นหมึกที่เหมาะสมที่สุดใน InkCheck</div>
+                </div>
+
+                <div class="guide-box">
+                    <h4>ข้อแตกต่างระหว่าง InkCheck และ ISO-Check</h4>
+                    <p>
+                    • <strong>ISO-Check:</strong> ออกแบบมาเพื่อตรวจประเมินแม่สี CMYK ตามข้อกำหนดมาตรฐาน ISO 12647-2 โดยเฉพาะ<br>
+                    • <strong>InkCheck:</strong> ยืดหยุ่นกว่า สามารถตรวจสอบและให้คำแนะนำการปรับจ่ายหมึกได้ทั้งสี CMYK และ <strong>สีพิเศษ (Spot Colors)</strong> ทุกเฉดสีที่มีข้อมูลสเปกตรัมใน Color Book
+                    </p>
+                </div>
+            `
+        },
+
+        cie_xyz: {
+            title: "CIE XYZ",
+            subtitle: "การแสดงค่าสีมาตรฐานในระบบ XYZ สำหรับงานที่ต้องอ้างอิงระบบนี้โดยเฉพาะ",
+            lcd: { title:"CIE XYZ", big:"X Y Z", color:"#00A8E8", func:"CIE XYZ", cond:"D50 2°/noPOL/ABS/M1",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#aaa;'>X: 10.47 | Y: 11.72 | Z: 29.91</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">วัดค่าเช่นเดียวกับ CIE L*a*b* (คาลิเบรทแผ่นขาวสัมบูรณ์ก่อน)</div></li>
+                        <li class="step-item"><div class="step-title">อ่านค่าในรูปแบบ X, Y, Z Tristimulus Values</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        cie_lch: {
+            title: "CIE L*C*h° ab",
+            subtitle: "การแสดงค่าสีในระบบพิกัดเชิงขั้ว ซึ่งสัมพันธ์ใกล้ชิดกับ CIE L*a*b*",
+            lcd: { title:"CIE L*C*h° ab", big:"C* 88.93", color:"#6554C0", func:"CIE L*C*h° ab", cond:"D50 2°/noPOL/ABS/M1",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;'>L*: 89.45 | h°: 93.52°</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">วัดค่าเช่นเดียวกับ CIE L*a*b*</div></li>
+                        <li class="step-item"><div class="step-title">อ่านค่าในรูปแบบพิกัดเชิงขั้ว L* (ความสว่าง), C* (Chroma ความสดของสี), h° (Hue มุมองศาเฉดสี)</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        color_library: {
+            title: "คลังสี (Color Library)",
+            subtitle: "การจัดเก็บ เรียกใช้ และเปรียบเทียบชุดค่าสีสำหรับงานลูกค้าแต่ละราย",
+            lcd: { title:"COLOR LIBRARY", big:"★ 42", color:"#00B8D9", func:"Color Library", cond:"noPOL/ABS",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;'>300 Refs · 3000 Samples · 20 Books</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <ul class="step-list">
+                        <li class="step-item"><div class="step-title">บันทึกค่าอ้างอิง (Reference Memory): เก็บได้สูงสุด 300 ค่า</div></li>
+                        <li class="step-item"><div class="step-title">บันทึกค่าตัวอย่าง (Sample Memory): เก็บได้สูงสุด 3,000 ค่า (แบบ Ring Memory)</div></li>
+                        <li class="step-item"><div class="step-title">โหลดคลังสี (Color Book): บรรจุได้สูงสุด 20 คลังสี (รวม 25,000 ค่าสี)</div></li>
+                        <li class="step-item"><div class="step-title">ค้นหาสีใกล้เคียงที่สุดอัตโนมัติ (Search automatically)</div></li>
+                    </ul>
+                </div>
+            `
+        },
+
+        spectrodens_connect: {
+            title: "โปรแกรม SpectroDens Connect",
+            subtitle: "ซอฟต์แวร์บนคอมพิวเตอร์สำหรับเชื่อมต่อ ตั้งค่า และส่งออกข้อมูลจากเครื่อง",
+            lcd: { title:"PC SYNCHRONIZATION", big:"USB LINK", color:"#36B37E", func:"SpectroDens Connect", cond:"Connected",
+                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;'>เชื่อมต่อผ่านสาย USB / WLAN</div>" },
+            doc: `
+                <div class="card">
+                    <div class="card-header"><h3>โมดูลสำคัญในซอฟต์แวร์ SpectroConnect</h3></div>
+                    <div class="highlight-grid">
+                        <div class="highlight-item"><h4>SpectroDens Settings</h4><p>ตั้งค่าอุปกรณ์ จัดการฟังก์ชัน ล็อกเมนู และตั้งค่าเครือข่าย WLAN</p></div>
+                        <div class="highlight-item"><h4>Device Update / Upgrade</h4><p>อัปเดตเฟิร์มแวร์ หรืออัปเกรดระดับความสามารถ (Basic ➔ Advanced ➔ Premium)</p></div>
+                        <div class="highlight-item"><h4>SpectroCheck</h4><p>ตรวจสอบความแม่นยำของอุปกรณ์ด้วยแถบอ้างอิงสี SpectroCheck NG</p></div>
+                        <div class="highlight-item"><h4>Export & Transfer Curve</h4><p>ส่งออกข้อมูลไปยัง Excel หรือส่งเส้นชดเชยเม็ดสกรีนไปยังซอฟต์แวร์ RIP</p></div>
+                    </div>
+                </div>
+            `
+        }
+    };
+
+    const quizData = [
+        {
+            q: "1. ในฟังก์ชัน Automatic Density ต้องวัดจุดใดก่อนเสมอ หากต้องการวัดเปอร์เซ็นต์เม็ดสกรีนต่อ",
+            options: [
+                { t: "ก. จุดกระดาษเปล่าที่ไม่มีการพิมพ์", correct: false },
+                { t: "ข. จุดทึบ (Solid)", correct: true },
+                { t: "ค. จุดที่พิมพ์ทับซ้อนกัน (Overprint)", correct: false },
+                { t: "ง. จุดใดก่อนก็ได้ ไม่มีผลต่อผลการคำนวณ", correct: false }
+            ],
+            explanation: "ต้องวัดจุดทึบ (Solid) ก่อนเสมอ เพื่อให้เครื่องใช้เป็นค่าอ้างอิงในการคำนวณ Dot Gain ของจุดเปอร์เซ็นต์เม็ดสกรีนที่วัดต่อ"
+        },
+        {
+            q: "2. ในฟังก์ชัน Densities CMYK เมื่อวัดจุดสีพิเศษ (Spot Color) เครื่องจะแสดงค่าใดเพิ่มเติมโดยอัตโนมัติ",
+            options: [
+                { t: "ก. ค่า Dmax พร้อมความยาวคลื่นพีคที่ตรวจพบ", correct: true },
+                { t: "ข. ค่า ΔE* เทียบกับคลังสี HKS", correct: false },
+                { t: "ค. เปอร์เซ็นต์เม็ดสกรีนของสีพิเศษ", correct: false },
+                { t: "ง. ค่า Slur/Doubling ของแพทช์นั้น", correct: false }
+            ],
+            explanation: "เมื่อวัดจุดสีพิเศษในฟังก์ชัน Densities CMYK เครื่องจะแสดงค่า Dmax (ความหนาแน่นสูงสุด) พร้อมความยาวคลื่นพีคให้โดยอัตโนมัติในหน้าจอเดียวกัน"
+        },
+        {
+            q: "3. การคำนวณค่า Dot Area ในฟังก์ชันวัดเปอร์เซ็นต์เม็ดสกรีนใช้สูตรใด",
+            options: [
+                { t: "ก. สูตร Preucil", correct: false },
+                { t: "ข. สูตร Murray-Davies", correct: true },
+                { t: "ค. สูตร Yule-Nielsen", correct: false },
+                { t: "ง. สูตร CIEDE2000", correct: false }
+            ],
+            explanation: "เครื่องคำนวณค่า Dot Area จากค่าความหนาแน่นของจุดทึบและจุดเปอร์เซ็นต์เม็ดสกรีนด้วยสูตร Murray-Davies"
+        },
+        {
+            q: "4. เมนู Dot Gain Setup สามารถตั้งค่าเปอร์เซ็นต์ที่ต้องการวัดล่วงหน้าได้สูงสุดกี่ค่า",
+            options: [
+                { t: "ก. 1 ค่า", correct: false },
+                { t: "ข. 2 ค่า", correct: false },
+                { t: "ค. 3 ค่า", correct: true },
+                { t: "ง. 5 ค่า", correct: false }
+            ],
+            explanation: "เมนู Dot Gain Setup กำหนดเปอร์เซ็นต์ที่ต้องการวัดล่วงหน้าได้สูงสุด 3 ค่า ก่อนเริ่มวัดจุดทึบและจุดเปอร์เซ็นต์ตามลำดับ"
+        },
+        {
+            q: "5. ก่อนเริ่มการวัดค่า Trapping ต้องวัดตามลำดับใด",
+            options: [
+                { t: "ก. วัดจุดที่พิมพ์ทับซ้อนก่อน จากนั้นจึงวัดสีเดี่ยวทั้งสองสี", correct: false },
+                { t: "ข. วัดสีเดี่ยวสีแรก วัดสีเดี่ยวสีที่สอง แล้วจึงวัดจุดที่พิมพ์ทับซ้อนกัน", correct: true },
+                { t: "ค. วัดจุดทึบ 100% เพียงจุดเดียวก็เพียงพอ", correct: false },
+                { t: "ง. วัดกระดาษเปล่าก่อนเสมอ", correct: false }
+            ],
+            explanation: "ลำดับที่ถูกต้องคือวัดสีเดี่ยวสีแรก สีเดี่ยวสีที่สอง แล้วจึงวัดจุดที่พิมพ์ทับซ้อนกัน เพื่อให้เครื่องคำนวณค่า Trapping ได้อย่างถูกต้อง"
+        },
+        {
+            q: "6. เหตุใดจึงต้องล้างสารเคลือบยางออกจากแผ่นเพลทก่อนวัดค่าความหนาแน่นด้วยฟังก์ชัน Printing Plate",
+            options: [
+                { t: "ก. เพื่อให้เพลทแห้งเร็วขึ้นก่อนขึ้นแท่นพิมพ์", correct: false },
+                { t: "ข. สารเคลือบยางทำให้แสงสูญเสียและค่าที่วัดได้คลาดเคลื่อน", correct: true },
+                { t: "ค. เพื่อเปลี่ยนสีของแผ่นเพลทให้เข้ากับเครื่อง", correct: false },
+                { t: "ง. เป็นขั้นตอนที่ไม่จำเป็น สามารถข้ามได้", correct: false }
+            ],
+            explanation: "สารเคลือบยางที่เคลือบอยู่บนเพลทจะทำให้แสงสะท้อนสูญเสียและค่าความหนาแน่นที่วัดได้คลาดเคลื่อน จึงต้องล้างออกและเช็ดให้แห้งก่อนวัดทุกครั้ง"
+        },
+        {
+            q: "7. ขอบเขตควบคุมความหนาแน่นมาตรฐานของฟังก์ชัน ExPresso Mini คือเท่าใด",
+            options: [
+                { t: "ก. ±0.01 D", correct: false },
+                { t: "ข. ±0.10 D", correct: true },
+                { t: "ค. ±1.00 D", correct: false },
+                { t: "ง. ไม่มีขอบเขตควบคุมที่กำหนดไว้", correct: false }
+            ],
+            explanation: "ขอบเขตควบคุมมาตรฐานของ ExPresso Mini คือ ±0.10 ความหนาแน่น ใช้ติดตามความสม่ำเสมอของน้ำหนักหมึกข้ามโซนพิมพ์"
+        },
+        {
+            q: "8. เหตุใดจึงต้องคาลิเบรทด้วยแผ่นขาวสัมบูรณ์ในฐานชาร์จก่อนวัดค่า CIE L*a*b*",
+            options: [
+                { t: "ก. เพื่อให้ค่าความหนาแน่นหมึกสัมพันธ์กับปริมาณหมึกบนกระดาษ", correct: false },
+                { t: "ข. เพื่อเทียบกับค่าอ้างอิงสากลสำหรับการวัดค่าสีเชิงมาตรฐาน", correct: true },
+                { t: "ค. เพื่อประหยัดพลังงานแบตเตอรี่", correct: false },
+                { t: "ง. เพื่อเปลี่ยนรูรับแสงของหัววัด", correct: false }
+            ],
+            explanation: "การคาลิเบรทด้วยแผ่นขาวสัมบูรณ์ใช้สำหรับการวัดค่าสีเชิงมาตรฐาน ต่างจากการคาลิเบรทบนกระดาษขาวซึ่งใช้สำหรับการวัดความหนาแน่นหมึก"
+        },
+        {
+            q: "9. ก่อนวัดค่า CIE L*a*b* ควรตั้งฟิลเตอร์โพลาไรซ์ในลักษณะใด",
+            options: [
+                { t: "ก. เปิด (Cross Polarized) เสมอ", correct: false },
+                { t: "ข. Auto หรือ Off", correct: true },
+                { t: "ค. ไม่มีผลต่อการวัดค่าสี จึงตั้งค่าใดก็ได้", correct: false },
+                { t: "ง. ต้องปิดเครื่องก่อนปรับฟิลเตอร์ทุกครั้ง", correct: false }
+            ],
+            explanation: "การวัดค่า CIE L*a*b* ควรตั้งฟิลเตอร์โพลาไรซ์เป็น Auto หรือ Off เพื่อให้ค่าสีที่วัดได้ถูกต้องตามมาตรฐาน"
+        },
+        {
+            q: "10. ค่า ΔE* ในระดับใดที่สายตามนุษย์โดยทั่วไปเริ่มสังเกตความแตกต่างของสีได้ เมื่อเทียบภายใต้สภาพแสงเดียวกัน",
+            options: [
+                { t: "ก. ประมาณ 0.1", correct: false },
+                { t: "ข. ประมาณ 1", correct: false },
+                { t: "ค. ประมาณ 5", correct: true },
+                { t: "ง. ประมาณ 50", correct: false }
+            ],
+            explanation: "ค่า ΔE* ในช่วงประมาณ 5 คือระดับที่สายตามนุษย์เริ่มสังเกตความแตกต่างของสีได้เมื่อเปรียบเทียบภายใต้สภาพแสงเดียวกัน"
+        }
+    ];
+
+    let currentActiveKey = 'basics_intro';
+
+    function loadContent(key) {
+        currentActiveKey = key;
+        const data = manualData[key];
+        if (!data) return;
+
+        document.getElementById('mainTitle').innerText = data.title;
+        document.getElementById('mainSubtitle').innerText = data.subtitle;
+        document.getElementById('lcdFuncName').innerText = data.lcd.func;
+        document.getElementById('lcdCondition').innerText = data.lcd.cond;
+
+        document.getElementById('lcdMainContent').innerHTML = `
+            <div class="screen-title">${data.lcd.title}</div>
+            <div class="big-measurement-val" style="color:${data.lcd.color};">${data.lcd.big}</div>
+            ${data.lcd.extra || ''}
+        `;
+        document.getElementById('docContainer').innerHTML = data.doc;
+
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        const clickedItem = Array.from(document.querySelectorAll('.nav-item')).find(el => el.getAttribute('onclick')?.includes(`'${key}'`));
+        if (clickedItem) clickedItem.classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function simNav(action) {
+        const keys = Object.keys(manualData);
+        let currentIndex = keys.indexOf(currentActiveKey);
+        if (currentIndex === -1) currentIndex = 0;
+
+        if (action === 'down') { currentIndex = (currentIndex + 1) % keys.length; loadContent(keys[currentIndex]); }
+        else if (action === 'up') { currentIndex = (currentIndex - 1 + keys.length) % keys.length; loadContent(keys[currentIndex]); }
+        else if (action === 'escape') { loadContent('basics_intro'); }
+        else if (action === 'enter') { triggerMeasurement(); }
+    }
+
+    function triggerMeasurement() {
+        if (!manualData[currentActiveKey]) return;
+        const lcdMain = document.getElementById('lcdMainContent');
+        lcdMain.innerHTML = `<div style="text-align:center;padding:20px 0;"><div style="font-size:1.3rem;color:#00B8D9;">กำลังวัดค่า...</div><div style="font-size:0.72rem;color:#888;margin-top:8px;">บันทึกข้อมูลสเปกตรัมเชิงแสง</div></div>`;
+        setTimeout(() => { loadContent(currentActiveKey); }, 500);
+    }
+
+    function triggerScan() {
+        if (!manualData[currentActiveKey]) return;
+        const lcdMain = document.getElementById('lcdMainContent');
+        lcdMain.innerHTML = `
+            <div style="text-align:center;padding:15px 0;">
+                <div style="font-size:1.1rem;color:#36B37E;">กำลังสแกนแถบควบคุม...</div>
+                <div style="display:flex;justify-content:center;gap:4px;margin-top:10px;">
+                    <span style="background:#00A8E8;width:12px;height:12px;display:inline-block;"></span>
+                    <span style="background:#E6007E;width:12px;height:12px;display:inline-block;"></span>
+                    <span style="background:#F9D423;width:12px;height:12px;display:inline-block;"></span>
+                    <span style="background:#111;border:1px solid #555;width:12px;height:12px;display:inline-block;"></span>
+                </div>
+            </div>`;
+        setTimeout(() => { loadContent(currentActiveKey); }, 800);
+    }
+
+    function filterMenu() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        document.querySelectorAll('.nav-category').forEach(cat => {
+            let hasMatch = false;
+            cat.querySelectorAll('.nav-item').forEach(item => {
+                const text = item.innerText.toLowerCase();
+                const match = text.includes(input);
+                item.style.display = match ? 'flex' : 'none';
+                if (match) hasMatch = true;
+            });
+            cat.style.display = hasMatch ? 'block' : 'none';
+        });
+    }
+
+    function toggleQuizMode() {
+        document.getElementById('mainTitle').innerText = "แบบทดสอบความเข้าใจ";
+        document.getElementById('mainSubtitle').innerText = "ประเมินความเข้าใจหลักการและขั้นตอนการใช้งานเครื่อง SpectroDens";
+
+        let quizHtml = `<div class="card"><div class="card-header"><h3>ชุดคำถามประเมินผล</h3></div>`;
+        quizData.forEach((qItem, qIdx) => {
+            quizHtml += `
+                <div style="margin-bottom: 1.5rem; border-bottom: 1px solid #EBECF0; padding-bottom: 1rem;">
+                    <h4 style="font-size:0.98rem;color:#091E42;margin-bottom:0.75rem;font-weight:600;">${qItem.q}</h4>
+                    <div class="quiz-options-group" id="qGroup_${qIdx}">
+                        ${qItem.options.map((opt, optIdx) => `<div class="quiz-option" onclick="checkAnswer(${qIdx}, ${optIdx}, ${opt.correct}, this)"><span>${opt.t}</span></div>`).join('')}
+                    </div>
+                    <div id="qExplain_${qIdx}" style="display:none;margin-top:8px;font-size:0.84rem;padding:8px 12px;border-radius:6px;"></div>
+                </div>
+            `;
+        });
+        quizHtml += `</div>`;
+        document.getElementById('docContainer').innerHTML = quizHtml;
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function checkAnswer(qIdx, optIdx, isCorrect, element) {
+        const group = document.getElementById(`qGroup_${qIdx}`);
+        const explain = document.getElementById(`qExplain_${qIdx}`);
+        group.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('correct', 'wrong'));
+
+        if (isCorrect) {
+            element.classList.add('correct');
+            explain.style.display = 'block';
+            explain.style.background = '#E3FCEF';
+            explain.style.color = '#006644';
+            explain.innerHTML = `คำตอบถูกต้อง — ${quizData[qIdx].explanation}`;
+        } else {
+            element.classList.add('wrong');
+            explain.style.display = 'block';
+            explain.style.background = '#FFEBE6';
+            explain.style.color = '#BF2600';
+            explain.innerHTML = `คำตอบยังไม่ถูกต้อง โปรดพิจารณาเงื่อนไขทางเทคนิคอีกครั้ง`;
+        }
+    }
+
+    window.onload = () => { loadContent('basics_intro'); };
+</script>
+</body>
+</html>
