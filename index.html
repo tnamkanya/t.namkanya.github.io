@@ -381,7 +381,7 @@
 
                 <div class="tip-box" style="margin-top: 1rem;">
                     <strong>คำแนะนำการใช้เมนู</strong>
-                    ใช้ปุ่มลูกศร <span class="shortcut-badge">▲ / ▼</span> บนแป้นกดเพื่อเลื่อนดูฟังก์ชันถัดไปหรือก่อนหน้าได้โดยไม่ต้องกลับไปที่เมนูด้านซ้าย และกดปุ่ม <span class="shortcut-badge">Escape (แดง)</span> เพื่อกลับสู่หน้าหลักได้ทันที
+                    กดปุ่ม <span class="shortcut-badge">Escape (แดง)</span> ค้างไว้ แล้วกดปุ่มลูกศร <span class="shortcut-badge">▲ / ▼</span> เพื่อเลื่อนดูฟังก์ชันถัดไปหรือก่อนหน้าได้โดยไม่ต้องกลับไปที่เมนูด้านซ้าย และกดปุ่ม Escape เพียงครั้งเดียวเพื่อกลับสู่หน้าหลักได้ทันที
                 </div>
             </div>
 
@@ -527,6 +527,7 @@
                     <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
                     <ul class="step-list">
                         <li class="step-item"><div class="step-title">เลือกฟังก์ชัน Automatic Density</div></li>
+                        <li class="step-item"><div class="step-title">คาลิเบรทกระดาษขาว (Paper White Calibration)</div><div class="step-desc">เลื่อนเคอร์เซอร์ไปที่ไอคอน CAL วางหัววัดบนกระดาษเปล่าของงานพิมพ์จริง แล้วกดปุ่มวัดค่าสีเขียว เพื่อตั้งจุดศูนย์ความหนาแน่น D = 0.00 ก่อนเริ่มวัดทุกครั้งที่เปลี่ยนชนิดกระดาษ</div></li>
                         <li class="step-item"><div class="step-title">วัดจุดทึบ (Solid Patch)</div><div class="step-desc">เครื่องตรวจจับแม่สี CMYK โดยอัตโนมัติและแสดงค่าความหนาแน่นทันที</div></li>
                         <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีน (Screen Patch)</div><div class="step-desc">เครื่องจะสลับไปแสดงผล Dot Area และคำนวณ Dot Gain ให้อัตโนมัติ</div></li>
                     </ul>
@@ -587,17 +588,75 @@
         dot_gain: {
             title: "Dot Gain / Print Contrast",
             subtitle: "การวัดอัตราการขยายตัวของเม็ดสกรีนและค่าความคมชัดของภาพพิมพ์",
-            lcd: { title:"DOT GAIN / CONTRAST", big:"80% +11.2%", color:"#36B37E", func:"Dot Gain/Contrast", cond:"ISO T/noPOL/ABS",
-                extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#aaa;'>Solid Reference D: 1.61<br>Print Contrast: 0.37 (37%)</div>" },
+            lcd: { title:"DOT GAIN / CONTRAST", big:"+11.2%", color:"#36B37E", func:"Dot Gain/Contrast", cond:"ISO T/noPOL/ABS",
+                extra:"<div style='font-size:0.8rem;text-align:center;margin-top:4px;color:#FFF;'>Printing Contrast &nbsp;0.37</div><div style='font-size:0.68rem;text-align:center;margin-top:6px;color:#aaa;'>K &nbsp;80 → 40 &nbsp;|&nbsp; Solid D: 1.61</div>" },
             doc: `
                 <div class="card">
                     <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <p style="font-size:0.88rem;color:#42526E;line-height:1.7;margin-bottom:0.75rem;">
+                    ฟังก์ชัน <strong>Dot Gain / Contrast</strong> ต่อยอดจากฟังก์ชัน Dot Area โดยหลังวัดจุดทึบแล้วให้วัดจุดเปอร์เซ็นต์เม็ดสกรีนต่อ เครื่องจะคำนวณทั้ง <strong>Dot Gain (%)</strong> และ <strong>Printing Contrast</strong> ให้อัตโนมัติ
+                    </p>
                     <ul class="step-list">
-                        <li class="step-item"><div class="step-title">ตั้งค่าเปอร์เซ็นต์ที่ต้องการวัดล่วงหน้าใน Dot Gain Setup (เช่น 40%, 80%)</div></li>
-                        <li class="step-item"><div class="step-title">วัดจุดทึบ (Solid) ก่อนเสมอ</div></li>
-                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีนตามลำดับลูกศรบนหน้าจอ</div></li>
-                        <li class="step-item"><div class="step-title">อ่านค่า Dot Gain และค่า Print Contrast ที่แสดงผลอัตโนมัติ</div></li>
+                        <li class="step-item"><div class="step-title">ตั้งค่าเปอร์เซ็นต์ที่ต้องการวัดล่วงหน้าใน Dot Gain Setup</div><div class="step-desc">กำหนดได้สูงสุด 3 ค่า (Dot value 1/2/3) เช่น 80% และ 40% ตามแถบควบคุม TECHKON TCS</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ (Solid) ก่อนเสมอ</div><div class="step-desc">เครื่องแสดงค่าความหนาแน่นจุดทึบ (เช่น K 1.61) พร้อมลูกศรคู่ &gt;&gt; ชี้ตำแหน่งจุดเปอร์เซ็นต์ที่ต้องวัดถัดไป (เช่น 80 แล้วตามด้วย 40)</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีนตามลำดับลูกศรบนหน้าจอ</div><div class="step-desc">หรือกดปุ่มวัดค่าสีเขียวค้างไว้แล้วลากสแกนผ่านแถบสเต็ปเวดจ์ทั้งแถบได้ในครั้งเดียว</div></li>
+                        <li class="step-item"><div class="step-title">อ่านค่า Dot Gain และ Printing Contrast ที่แสดงผลอัตโนมัติ</div><div class="step-desc">หลังวัดจุดเปอร์เซ็นต์จุดสุดท้าย หน้าจอแสดงค่า Dot Gain เป็น % ตัวใหญ่ พร้อมค่า Printing Contrast บรรทัดล่าง หากวัดผิดพลาดกดปุ่ม Escape (แดง) เพื่อย้อนกลับไปวัดซ้ำในจุดเดิมได้ทันที</div></li>
                     </ul>
+                </div>
+                <div class="figure-container">
+                    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+                        <div>
+                            <svg width="230" height="190" viewBox="0 0 230 190">
+                                <rect x="0" y="0" width="230" height="190" rx="8" fill="#05070a"/>
+                                <text x="10" y="17" fill="#666" font-size="10" font-family="'JetBrains Mono',monospace">Reference</text>
+                                <rect x="120" y="5" width="70" height="18" rx="3" fill="#1c2430"/>
+                                <text x="155" y="17" fill="#FFFFFF" font-size="10" font-family="'JetBrains Mono',monospace" text-anchor="middle" font-weight="bold">Sample_1</text>
+                                <rect x="197" y="5" width="26" height="18" rx="3" fill="none" stroke="#00875A"/>
+                                <text x="210" y="17" fill="#57D9A3" font-size="8" font-family="'JetBrains Mono',monospace" text-anchor="middle">CAL</text>
+                                <line x1="0" y1="28" x2="230" y2="28" stroke="#1c1c1c"/>
+                                <rect x="30" y="52" width="34" height="34" rx="4" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+                                <text x="47" y="76" fill="#FFFFFF" font-size="18" font-weight="bold" font-family="'JetBrains Mono',monospace" text-anchor="middle">K</text>
+                                <text x="140" y="83" fill="#FFFFFF" font-size="32" font-weight="bold" font-family="'JetBrains Mono',monospace" text-anchor="middle">1.61</text>
+                                <rect x="30" y="108" width="28" height="20" rx="3" fill="none" stroke="#FFFFFF"/>
+                                <text x="44" y="122" fill="#FFFFFF" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle">K</text>
+                                <text x="66" y="123" fill="#FFFFFF" font-size="13" font-family="'JetBrains Mono',monospace">&gt;&gt;</text>
+                                <rect x="82" y="108" width="30" height="20" rx="3" fill="#0B1F16" stroke="#57D9A3"/>
+                                <text x="97" y="122" fill="#57D9A3" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle">80</text>
+                                <rect x="120" y="108" width="30" height="20" rx="3" fill="none" stroke="#555"/>
+                                <text x="135" y="122" fill="#888" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle">40</text>
+                                <text x="30" y="146" fill="#AAAAAA" font-size="11" font-family="'JetBrains Mono',monospace">1.61</text>
+                                <line x1="0" y1="164" x2="230" y2="164" stroke="#1c1c1c"/>
+                                <text x="10" y="180" fill="#4c9aff" font-size="10" font-family="'JetBrains Mono',monospace">Dot Gain/Contrast</text>
+                                <text x="220" y="180" fill="#FFAB00" font-size="10" font-family="'JetBrains Mono',monospace" text-anchor="end">ISO T/noPOL/ABS</text>
+                            </svg>
+                            <div class="figure-caption" style="margin-top:2px;">1) หลังวัดจุดทึบ — แสดงความหนาแน่น K 1.61 พร้อมลูกศรชี้จุด %-ถัดไป (80)</div>
+                        </div>
+                        <div>
+                            <svg width="230" height="190" viewBox="0 0 230 190">
+                                <rect x="0" y="0" width="230" height="190" rx="8" fill="#05070a"/>
+                                <text x="10" y="17" fill="#666" font-size="10" font-family="'JetBrains Mono',monospace">Reference</text>
+                                <rect x="120" y="5" width="70" height="18" rx="3" fill="#1c2430"/>
+                                <text x="155" y="17" fill="#FFFFFF" font-size="10" font-family="'JetBrains Mono',monospace" text-anchor="middle" font-weight="bold">Sample_2</text>
+                                <rect x="197" y="5" width="26" height="18" rx="3" fill="none" stroke="#00875A"/>
+                                <text x="210" y="17" fill="#57D9A3" font-size="8" font-family="'JetBrains Mono',monospace" text-anchor="middle">CAL</text>
+                                <line x1="0" y1="28" x2="230" y2="28" stroke="#1c1c1c"/>
+                                <text x="115" y="70" fill="#57D9A3" font-size="30" font-weight="bold" font-family="'JetBrains Mono',monospace" text-anchor="middle">+11.2%</text>
+                                <text x="115" y="93" fill="#FFFFFF" font-size="12" font-family="'JetBrains Mono',monospace" text-anchor="middle">Printing Contrast &nbsp;0.37</text>
+                                <rect x="30" y="108" width="28" height="20" rx="3" fill="none" stroke="#FFFFFF"/>
+                                <text x="44" y="122" fill="#FFFFFF" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle">K</text>
+                                <rect x="82" y="108" width="30" height="20" rx="3" fill="none" stroke="#555"/>
+                                <text x="97" y="122" fill="#888" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle">80</text>
+                                <text x="118" y="123" fill="#FFFFFF" font-size="12" font-family="'JetBrains Mono',monospace">→</text>
+                                <rect x="128" y="108" width="30" height="20" rx="3" fill="#0B1F16" stroke="#57D9A3"/>
+                                <text x="143" y="122" fill="#57D9A3" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle">40</text>
+                                <text x="30" y="146" fill="#AAAAAA" font-size="11" font-family="'JetBrains Mono',monospace">1.61 &nbsp;&nbsp;11.2%</text>
+                                <line x1="0" y1="164" x2="230" y2="164" stroke="#1c1c1c"/>
+                                <text x="10" y="180" fill="#4c9aff" font-size="10" font-family="'JetBrains Mono',monospace">Dot Gain/Contrast</text>
+                                <text x="220" y="180" fill="#FFAB00" font-size="10" font-family="'JetBrains Mono',monospace" text-anchor="end">ISO T/noPOL/ABS</text>
+                            </svg>
+                            <div class="figure-caption" style="margin-top:2px;">2) หลังวัดจุด %-สุดท้าย (40) — แสดงค่า Dot Gain +11.2% และ Printing Contrast 0.37</div>
+                        </div>
+                    </div>
                 </div>
             `
         },
@@ -616,38 +675,89 @@
                         <li class="step-item"><div class="step-title">วัดจุดที่พิมพ์ทับซ้อนกัน (Overprint Patch C+M)</div><div class="step-desc">เครื่องคำนวณและแสดงค่า Trapping เป็นเปอร์เซ็นต์ทันที</div></li>
                     </ul>
                 </div>
+                <div class="guide-box">
+                    <h4>คู่สีพิมพ์ทับที่ตรวจสอบ และเกณฑ์เปอร์เซ็นต์ตาม Manual (Paper Class 1: กระดาษอาร์ตมัน/เคลือบผิว)</h4>
+                    <table class="tech-table" style="margin-top:0.5rem;">
+                        <thead><tr><th>คู่สีที่พิมพ์ทับกัน</th><th>เกณฑ์ Trapping ที่ควรได้ (Paper Class 1)</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>C+M</strong> (Cyan ทับ Magenta หรือ Magenta ทับ Cyan)</td><td>มากกว่า <strong>60%</strong></td></tr>
+                            <tr><td><strong>M+Y</strong> (Magenta ทับ Yellow หรือ Yellow ทับ Magenta)</td><td>มากกว่า <strong>72%</strong></td></tr>
+                            <tr><td><strong>C+Y</strong> (Cyan ทับ Yellow หรือ Yellow ทับ Cyan)</td><td>มากกว่า <strong>85%</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top:0.6rem;">
+                    ค่าดังกล่าวเป็นค่าทั่วไปสำหรับงานพิมพ์มาตรฐานบน <strong>Paper Class 1 (กระดาษมันเคลือบผิว)</strong> เท่านั้น — คู่มือระบุว่า<strong>ไม่มีค่ามาตรฐานตายตัว (no standard values)</strong> สำหรับ Trapping เพราะขึ้นอยู่กับกระบวนการพิมพ์ ชนิดหมึก และชนิดกระดาษที่ใช้จริงของแต่ละโรงพิมพ์ ควรกำหนดค่าเป้าหมายร่วมกับมาตรฐานงานพิมพ์ของแต่ละโรงงาน<br><br>
+                    เครื่อง SpectroDens คำนวณค่า Trapping ด้วยสูตรขยายผลตามแนวทางของ <strong>Professor Ritz และ Felix Brunner</strong> ซึ่งช่วยให้เปรียบเทียบค่า C+M, M+Y และ C+Y ได้แม่นยำยิ่งขึ้น
+                    </p>
+                </div>
             `
         },
 
         printing_curve: {
             title: "Printing Curve",
-            subtitle: "การประเมินเส้นโค้งการถ่ายทอดเม็ดสกรีนตลอดทั้งช่วงโทนภาพ",
-            lcd: { title:"PRINTING CURVE", big:"90% +7.3%", color:"#36B37E", func:"Printing Curve", cond:"ISO Class 1/2",
-                extra:"<div style='font-size:0.7rem;color:#36B37E;text-align:center;margin-top:8px;'>ภายในขอบเขต Tolerance ISO PC 1/2</div>" },
+            subtitle: "การประเมินเส้นโค้งการถ่ายทอดเม็ดสกรีนตลอดทั้งช่วงโทนภาพ เทียบกับขอบเขต Tolerance",
+            lcd: { title:"PRINTING CURVE", big:"+7.3%", color:"#36B37E", func:"Printing Curve", cond:"ISO PC 1/2 · 150 lpi",
+                extra:"<div style='font-size:0.7rem;color:#4c9aff;text-align:center;margin-top:4px;'>&gt;&gt; 90 &nbsp;|&nbsp; Solid C: 1.50 D</div>" },
             doc: `
                 <div class="card">
                     <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
+                    <p style="font-size:0.88rem;color:#42526E;line-height:1.7;margin-bottom:0.75rem;">
+                    ฟังก์ชัน <strong>Printing Curve</strong> แสดงเส้นโค้งการถ่ายทอดเม็ดสกรีนแบบเต็มรูปแบบตลอดช่วงโทนภาพ (0–100%) พร้อมขอบเขต Tolerance ให้เทียบผลได้ทันทีว่างานพิมพ์อยู่ในเกณฑ์มาตรฐานหรือไม่
+                    </p>
                     <ul class="step-list">
-                        <li class="step-item"><div class="step-title">ตั้งค่าที่เมนู Printing Curve Setup</div><div class="step-desc">เลือกมาตรฐาน tolerance ความถี่สกรีน และช่วงเปอร์เซ็นต์ที่ต้องการวัด เช่น ทีละ 5% หรือ 10%</div></li>
-                        <li class="step-item"><div class="step-title">วัดจุดทึบ 100% ก่อน</div></li>
-                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีนตามลำดับ หรือใช้วิธีสแกนลากผ่านแถบสเต็ปเวดจ์</div></li>
-                        <li class="step-item"><div class="step-title">อ่านผลกราฟเส้นโค้งที่พล็อตพร้อมแถบ Tolerance</div></li>
+                        <li class="step-item"><div class="step-title">ตั้งค่าที่เมนู Printing Curve Setup</div><div class="step-desc">เลือก <strong>Tolerance</strong> ตามมาตรฐาน (เช่น ISO Paper Class 1/2), <strong>Dot frequency</strong> ความถี่สกรีน (เช่น 150 lpi) และ <strong>Display Mode</strong> พร้อมช่วงเปอร์เซ็นต์ที่ต้องการวัด เช่น ทีละ 5%</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดทึบ 100% (Solid) ก่อนเสมอ</div><div class="step-desc">เครื่องตรวจจับสีโดยอัตโนมัติและแสดงค่าความหนาแน่นจุดทึบ (เช่น C 1.50D) พร้อมลูกศรคู่ &gt;&gt; ชี้จุด %-ถัดไปที่ต้องวัด (เช่น 90)</div></li>
+                        <li class="step-item"><div class="step-title">วัดจุดเปอร์เซ็นต์เม็ดสกรีนตามลำดับ หรือสแกนลากผ่านแถบสเต็ปเวดจ์</div><div class="step-desc">กดปุ่มวัดค่าสีเขียวค้างไว้แล้วลากหัววัดผ่านแถบขั้นบันไดที่มีเส้นแบ่งช่องได้ทั้งแถบในครั้งเดียว (แนะนำแพทช์ 5×5 มม. ขึ้นไปสำหรับหัววัดมาตรฐาน)</div></li>
+                        <li class="step-item"><div class="step-title">อ่านผลกราฟเส้นโค้งที่พล็อตพร้อมแถบ Tolerance</div><div class="step-desc">แกนตั้งแสดงค่าเบี่ยงเบนจากเส้นตรง (Dot Gain, -20% ถึง +20%) แกนนอนแสดงเปอร์เซ็นต์เม็ดสกรีน (0–100%) หากวัดผิดพลาดกดปุ่ม Escape (แดง) เพื่อวัดซ้ำในจุดเดิมได้ทันที</div></li>
                     </ul>
                 </div>
                 <div class="figure-container">
-                    <svg width="100%" height="110" viewBox="0 0 400 110" style="background:#111827;border-radius:6px;">
-                        <line x1="40" y1="90" x2="380" y2="90" stroke="#4B5563" stroke-width="1"/>
-                        <line x1="40" y1="10" x2="40" y2="90" stroke="#4B5563" stroke-width="1"/>
-                        <path d="M 40 90 Q 200 15 380 90" fill="none" stroke="rgba(54, 179, 126, 0.35)" stroke-width="24"/>
-                        <path d="M 40 90 Q 200 20 380 90" fill="none" stroke="#36B37E" stroke-width="3"/>
-                        <circle cx="210" cy="40" r="4" fill="#FFF"/>
-                        <circle cx="340" cy="74" r="4" fill="#00A8E8"/>
-                        <text x="345" y="70" fill="#00A8E8" font-size="10" font-family="monospace">90% +7.3%</text>
-                        <text x="40" y="104" fill="#9CA3AF" font-size="9" font-family="monospace">0%</text>
-                        <text x="200" y="104" fill="#9CA3AF" font-size="9" font-family="monospace">50%</text>
-                        <text x="360" y="104" fill="#9CA3AF" font-size="9" font-family="monospace">100%</text>
+                    <svg width="100%" height="240" viewBox="0 0 400 240" style="background:#05070a;border-radius:8px;">
+                        <text x="14" y="20" fill="#666" font-size="11" font-family="'JetBrains Mono',monospace">Reference</text>
+                        <rect x="300" y="8" width="86" height="20" rx="3" fill="#1c2430"/>
+                        <text x="343" y="22" fill="#FFFFFF" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle" font-weight="bold">Sample</text>
+                        <text x="14" y="40" fill="#CCCCCC" font-size="10" font-family="'JetBrains Mono',monospace">ISO paper class 1/2 &nbsp;&nbsp;150 lpi</text>
+                        <line x1="0" y1="50" x2="400" y2="50" stroke="#1a1a1a"/>
+
+                        <line x1="45" y1="62" x2="45" y2="190" stroke="#333" stroke-width="1"/>
+                        <line x1="45" y1="190" x2="380" y2="190" stroke="#333" stroke-width="1"/>
+                        <line x1="45" y1="94" x2="380" y2="94" stroke="#161616" stroke-width="1"/>
+                        <line x1="45" y1="126" x2="380" y2="126" stroke="#161616" stroke-width="1"/>
+                        <line x1="45" y1="158" x2="380" y2="158" stroke="#161616" stroke-width="1"/>
+                        <text x="38" y="66" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="end">+20</text>
+                        <text x="38" y="98" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="end">+15</text>
+                        <text x="38" y="130" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="end">+10</text>
+                        <text x="38" y="162" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="end">+5</text>
+                        <text x="38" y="194" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="end">+0</text>
+
+                        <path d="M 45 190 C 90 90 140 66 190 72 C 230 76 280 110 331 150 C 350 165 365 178 380 190 L 380 190 L 45 190 Z" fill="#407040"/>
+                        <path d="M 45 190 C 90 90 140 66 190 72 C 230 76 280 110 331 150 C 350 165 365 178 380 190" fill="none" stroke="#8FE0A0" stroke-width="2"/>
+
+                        <line x1="346.5" y1="62" x2="346.5" y2="190" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="3,3" opacity="0.55"/>
+
+                        <g transform="translate(58,58)">
+                            <rect x="0" y="0" width="52" height="20" rx="3" fill="#0B1F16" stroke="#4c9aff"/>
+                            <text x="26" y="14" fill="#4c9aff" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle">&gt;&gt; 80</text>
+                        </g>
+
+                        <g transform="translate(298,132)">
+                            <rect x="0" y="0" width="80" height="22" rx="4" fill="#0B1F16" stroke="#57D9A3"/>
+                            <text x="40" y="15" fill="#FFFFFF" font-size="12" font-family="'JetBrains Mono',monospace" text-anchor="middle" font-weight="bold">90 &nbsp;+7.3%</text>
+                        </g>
+                        <circle cx="346.5" cy="150" r="3.5" fill="#57D9A3"/>
+
+                        <text x="45" y="205" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="middle">0</text>
+                        <text x="112" y="205" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="middle">20</text>
+                        <text x="179" y="205" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="middle">40</text>
+                        <text x="246" y="205" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="middle">60</text>
+                        <text x="313" y="205" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="middle">80</text>
+                        <text x="380" y="205" fill="#8A94A6" font-size="9" font-family="monospace" text-anchor="middle">100</text>
+
+                        <line x1="0" y1="214" x2="400" y2="214" stroke="#1a1a1a"/>
+                        <text x="14" y="230" fill="#4c9aff" font-size="11" font-family="'JetBrains Mono',monospace">Printing Curve</text>
+                        <text x="386" y="230" fill="#FFAB00" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="end">ISO E/POL/PAP</text>
                     </svg>
-                    <div class="figure-caption">กราฟเส้นโค้งการถ่ายทอดเม็ดสกรีน (Printing Curve) พร้อมแถบ Tolerance สีเขียว</div>
+                    <div class="figure-caption">จำลองหน้าจอฟังก์ชัน Printing Curve ตามคู่มือ: พื้นที่กราฟสีเขียวคือเส้นโค้งการถ่ายทอดเม็ดสกรีนที่วัดได้จริง แกนนอน 0–100% (เปอร์เซ็นต์เม็ดสกรีน) แกนตั้ง +0 ถึง +20% (ค่า Dot Gain เทียบเส้นตรง) เส้นประแนวตั้งและกล่องตัวเลขแสดงจุดที่วัดล่าสุด (90% = +7.3%)</div>
                 </div>
             `
         },
@@ -703,6 +813,20 @@
                         </g>
                     </svg>
                     <div class="figure-caption">ลักษณะแพทช์ลายเส้นแนวนอนและแนวตั้งบนแถบควบคุมสำหรับตรวจสอบ Slur & Doubling</div>
+                </div>
+                <div class="guide-box">
+                    <h4>เกณฑ์เป้าหมายตาม Manual</h4>
+                    <table class="tech-table" style="margin-top:0.5rem;">
+                        <thead><tr><th>ค่า Slur/Doubling ที่วัดได้</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>0%</strong></td><td>ค่าที่ดีที่สุด (Best achievable) — การถ่ายทอดจุดสกรีนสมบูรณ์แบบ เส้นแนวนอนและแนวตั้งหนาเท่ากัน ไม่มี Slur หรือ Doubling เลย</td></tr>
+                            <tr><td>สูงถึงประมาณ <strong>5%</strong></td><td>ยังถือว่า<strong>ยอมรับได้ (still acceptable)</strong></td></tr>
+                            <tr><td>สูงกว่า <strong>10%</strong></td><td>บ่งชี้ว่ามี<strong>ความผิดพลาดทางเรขาคณิตที่ชัดเจน (significant geometrical errors)</strong> จากสาเหตุ Slur หรือ Doubling</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top:0.6rem;">
+                    คู่มือระบุว่า<strong>ไม่มีค่ามาตรฐานตายตัว (no standard values)</strong> สำหรับเปอร์เซ็นต์สูงสุดที่ยอมรับได้ — ตัวเลขข้างต้นเป็นแนวทางทั่วไปเท่านั้น ควรกำหนดเกณฑ์ที่เหมาะสมร่วมกับมาตรฐานงานพิมพ์ของแต่ละโรงพิมพ์
+                    </p>
                 </div>
             `
         },
