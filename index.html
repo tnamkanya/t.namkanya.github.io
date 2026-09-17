@@ -858,10 +858,26 @@
 
         slur_doubling: {
             title: "Slur & Doubling",
-            subtitle: "การตรวจจับความผิดเพี้ยนทางเรขาคณิตของเม็ดสกรีนที่เกิดจากกลไกการพิมพ์",
+            subtitle: "ตรวจจับอาการจุดสกรีนลากเปื้อนหรือซ้อนภาพจากกลไกแท่นพิมพ์ ซึ่งทำให้ภาพพิมพ์ดูเลอะและสีเข้มผิดปกติ",
             lcd: { title:"SLUR AND DOUBLING", big:"+2.2 %", color:"#36B37E", func:"Slur and Doubling", cond:"ISO E/POL/PAP",
                 extra:"<div style='font-size:0.72rem;text-align:center;margin-top:8px;color:#36B37E;'>H: 65.6% | V: 63.4%<br>สถานะ: อยู่ในเกณฑ์ปกติ (ไม่เกิน 5%)</div>" },
             doc: `
+                <div class="card">
+                    <div class="card-header"><h3>Slur กับ Doubling คืออะไร</h3></div>
+                    <p style="font-size:0.88rem;color:#42526E;line-height:1.75;">
+                    ทั้งสองคำนี้พูดถึงอาการเดียวกันคือ <strong>"จุดสกรีนเสียรูปทรงไปจากที่ควรจะเป็น"</strong> ระหว่างการพิมพ์ ซึ่งส่งผลให้<strong>จุดสกรีนดูใหญ่ขึ้นกว่าความจริง</strong> ทำให้ภาพพิมพ์ดูเข้มขึ้น/เลอะ/เบลอ ทั้งที่ปริมาณหมึกจริงไม่ได้เพิ่มขึ้นเลย แบ่งเป็น 2 ลักษณะ:
+                    </p>
+                    <div class="highlight-grid">
+                        <div class="highlight-item" style="border-left-color:#E6007E;">
+                            <h4>Slur (จุดลาก/เปื้อน)</h4>
+                            <p>จุดสกรีนถูกลากยืดออกไปทางใดทางหนึ่ง คล้ายภาพเบลอตอนกล้องสั่น เกิดจากการเลื่อนไถลระหว่างแม่พิมพ์ ผ้ายาง และกระดาษไม่สัมพันธ์กัน</p>
+                        </div>
+                        <div class="highlight-item" style="border-left-color:#E6007E;">
+                            <h4>Doubling (จุดซ้อนภาพ)</h4>
+                            <p>เกิดจุดจางๆ ซ้อนเหลื่อมข้างจุดจริง คล้ายภาพซ้อนหรือเงาสะท้อน เกิดจากหมึกบางส่วนติดกลับไปที่ผ้ายางแล้วพิมพ์ทับซ้ำอีกครั้งแบบเยื้องตำแหน่ง</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-header"><h3>ขั้นตอนการใช้งาน</h3></div>
                     <ul class="step-list">
@@ -895,9 +911,9 @@
                     <table class="tech-table" style="margin-top:0.5rem;">
                         <thead><tr><th>ค่า Slur/Doubling ที่วัดได้</th><th>ความหมาย</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>0%</strong></td><td>ค่าที่ดีที่สุด (Best achievable) — การถ่ายทอดจุดสกรีนสมบูรณ์แบบ เส้นแนวนอนและแนวตั้งหนาเท่ากัน ไม่มี Slur หรือ Doubling เลย</td></tr>
+                            <tr><td><strong>0%</strong></td><td>ค่าที่ดีที่สุด (Best achievable) — การถ่ายทอดจุดสกรีนสมบูรณ์แบบ เส้นแนวนอนและแนวตั้งหนาเท่ากัน ไม่มีจุดลากหรือจุดซ้อนภาพเลย</td></tr>
                             <tr><td>สูงถึงประมาณ <strong>5%</strong></td><td>ยังถือว่า<strong>ยอมรับได้ (still acceptable)</strong></td></tr>
-                            <tr><td>สูงกว่า <strong>10%</strong></td><td>บ่งชี้ว่ามี<strong>ความผิดพลาดทางเรขาคณิตที่ชัดเจน (significant geometrical errors)</strong> จากสาเหตุ Slur หรือ Doubling</td></tr>
+                            <tr><td>สูงกว่า <strong>10%</strong></td><td>บ่งชี้ว่า<strong>จุดสกรีนเสียรูปทรงชัดเจน</strong> จากอาการลากเปื้อนหรือซ้อนภาพ ซึ่งจะทำให้ภาพพิมพ์ดูเลอะและสีเข้มผิดปกติมากขึ้น</td></tr>
                         </tbody>
                     </table>
                     <p style="margin-top:0.6rem;">
